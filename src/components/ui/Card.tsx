@@ -1,0 +1,76 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import { cn } from "@/lib/utils";
+
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+  tilt?: boolean;
+  glow?: boolean;
+}
+
+export function Card({
+  children,
+  className,
+  tilt = true,
+  glow = true,
+}: CardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+
+  const rotateX = useTransform(mouseY, [0, 1], [5, -5]);
+  const rotateY = useTransform(mouseX, [0, 1], [-5, 5]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current || !tilt) return;
+    const rect = ref.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width);
+    mouseY.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      className={cn(
+        "relative rounded-2xl overflow-hidden group",
+        "bg-white/[0.03] backdrop-blur-xl border border-white/[0.08]",
+        "transition-shadow duration-500",
+        "hover:shadow-[0_8px_40px_rgba(26,109,255,0.15)]",
+        className
+      )}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX: tilt ? rotateX : 0,
+        rotateY: tilt ? rotateY : 0,
+        transformPerspective: 1200,
+        transformStyle: "preserve-3d",
+      }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.3 }}
+    >
+      {/* Glow effect following cursor */}
+      {glow && (
+        <motion.div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: useTransform(
+              [mouseX, mouseY],
+              ([mx, my]: number[]) =>
+                `radial-gradient(600px circle at ${mx * 100}% ${my * 100}%, rgba(26,109,255,0.1), transparent 40%)`
+            ),
+          }}
+        />
+      )}
+      {children}
+    </motion.div>
+  );
+}
