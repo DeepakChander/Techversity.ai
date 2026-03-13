@@ -273,7 +273,7 @@ export function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-32 lg:pt-40"
         style={{ opacity: scrollOpacity, y: scrollY }}
       >
         {/* Headline - word by word reveal */}
