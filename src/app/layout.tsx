@@ -4,6 +4,7 @@ import "./globals.css";
 import { LenisProvider } from "@/components/layout/LenisProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -59,6 +60,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="bg-bg-primary text-text-secondary font-sans antialiased overflow-x-hidden">
         <LenisProvider />
+        <ScrollToTop />
         <CustomCursor />
         <PageTransition>{children}</PageTransition>
       </body>
