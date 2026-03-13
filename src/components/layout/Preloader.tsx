@@ -21,9 +21,13 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => {
 });
 
 export function Preloader() {
+  const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<"scatter" | "converge" | "reveal">("scatter");
+
+  // Mount only on client to avoid hydration mismatch from Framer Motion transforms
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const convergeTimer = setTimeout(() => setPhase("converge"), 800);
@@ -51,6 +55,8 @@ export function Preloader() {
       clearTimeout(revealTimer);
     };
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <AnimatePresence>
