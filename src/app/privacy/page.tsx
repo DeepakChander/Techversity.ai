@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Techversity.ai privacy policy. Learn how we collect, use, and protect your information.",
+};
 
 export default function PrivacyPage() {
   return (

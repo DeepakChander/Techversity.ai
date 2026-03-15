@@ -21,16 +21,25 @@ export const NAV_LINKS = [
         label: "Honorary Doctorate",
         href: "/programs/honorary-doctorate",
         description: "Recognition of outstanding professional achievements",
+        icon: "Award",
+        accent: "#1a6dff",
+        duration: "4-6 months",
       },
       {
         label: "Doctor of Business Administration",
         href: "/programs/dba",
         description: "Advanced business research and leadership",
+        icon: "Briefcase",
+        accent: "#00e5ff",
+        duration: "18-36 months",
       },
       {
         label: "Doctor of Philosophy",
         href: "/programs/phd",
         description: "Rigorous academic research program",
+        icon: "GraduationCap",
+        accent: "#7b2ff7",
+        duration: "24-48 months",
       },
     ],
   },
@@ -171,41 +180,130 @@ export const UNIVERSITIES = [
     id: "cc-university",
     name: "CC University",
     location: "United States",
+    region: "North America",
     flag: "🇺🇸",
     description:
       "A forward-thinking institution committed to accessible, high-quality higher education for working professionals.",
+    fullDescription:
+      "CC University stands at the forefront of modern higher education, combining rigorous academic standards with innovative approaches to professional development. With a focus on accessibility and excellence, the university has established itself as a trusted partner for accomplished professionals seeking doctoral-level credentials.",
     programs: ["Honorary Doctorate", "DBA", "PhD"],
+    specializations: ["Business Leadership", "Technology", "Innovation Management"],
     coordinates: { lat: 38.9, lng: -77.0 },
+    featured: true,
+    established: "1998",
+    accreditation: "Nationally Accredited",
   },
   {
     id: "washington-digital",
     name: "Washington Digital University",
     location: "United States",
+    region: "North America",
     flag: "🇺🇸",
     description:
       "Specializing in digital-era education, bridging technology and traditional academic excellence.",
+    fullDescription:
+      "Washington Digital University pioneers the convergence of digital innovation and academic tradition. As a leader in online doctoral education, it offers cutting-edge programs designed for the modern professional who demands flexibility without compromising on academic rigor.",
     programs: ["Honorary Doctorate", "DBA"],
+    specializations: ["Digital Transformation", "Entrepreneurship", "Data Science"],
     coordinates: { lat: 47.6, lng: -122.3 },
+    featured: true,
+    established: "2005",
+    accreditation: "Nationally Accredited",
   },
   {
     id: "euro-asian",
     name: "Euro-Asian University",
     location: "Estonia",
+    region: "Europe",
     flag: "🇪🇪",
     description:
       "A European institution fostering cross-cultural academic collaboration between East and West.",
+    fullDescription:
+      "Euro-Asian University exemplifies the spirit of global academic collaboration, bridging Eastern and Western educational philosophies. Located in Estonia — one of Europe's most digitally advanced nations — it offers a unique perspective on international business and cross-cultural leadership.",
     programs: ["Honorary Doctorate", "PhD"],
+    specializations: ["Cross-Cultural Studies", "International Relations", "Digital Governance"],
     coordinates: { lat: 59.4, lng: 24.7 },
+    featured: false,
+    established: "2001",
+    accreditation: "EU Recognized",
   },
   {
     id: "esdst",
     name: "ESDST",
     location: "European Union",
+    region: "Europe",
     flag: "🇪🇺",
     description:
       "European School of Doctoral Studies and Training, focused on professional doctoral education.",
+    fullDescription:
+      "The European School of Doctoral Studies and Training (ESDST) is dedicated exclusively to professional doctoral education. With a pan-European approach, it offers research-intensive programs that meet the highest continental academic standards while remaining accessible to working professionals worldwide.",
     programs: ["DBA", "PhD"],
+    specializations: ["Research Methodology", "European Business", "Public Policy"],
     coordinates: { lat: 48.8, lng: 2.3 },
+    featured: false,
+    established: "2003",
+    accreditation: "EU Recognized",
+  },
+] as const;
+
+export const UNIVERSITY_REGIONS = [
+  "All Regions",
+  "North America",
+  "Europe",
+] as const;
+
+export const COLLABORATION_MODEL = [
+  {
+    title: "Joint Research Programs",
+    description: "Collaborative research initiatives that combine institutional expertise with professional industry experience, producing impactful scholarship.",
+    icon: "FlaskConical",
+  },
+  {
+    title: "Academic Accreditation",
+    description: "All degrees and credentials are conferred directly by accredited universities, ensuring global recognition and institutional legitimacy.",
+    icon: "BadgeCheck",
+  },
+  {
+    title: "Global Faculty Network",
+    description: "Access to distinguished professors and mentors from partner institutions across continents, bringing diverse perspectives to your research.",
+    icon: "Users",
+  },
+  {
+    title: "Professional Doctorate Pathways",
+    description: "Structured pathways designed for working professionals, balancing academic rigor with practical applicability in your field.",
+    icon: "Route",
+  },
+] as const;
+
+export const IMPACT_STATS = [
+  { value: 4, suffix: "", label: "Partner Universities" },
+  { value: 3, suffix: "", label: "Continents" },
+  { value: 12, suffix: "+", label: "Countries Served" },
+  { value: 6, suffix: "+", label: "Doctoral Programs" },
+  { value: 98, suffix: "%", label: "Acceptance Rate" },
+  { value: 4.8, suffix: "/5", label: "Satisfaction Score" },
+] as const;
+
+export const ACCREDITATIONS = [
+  {
+    name: "National Accreditation",
+    description: "Recognized by national education authorities in the United States",
+    region: "United States",
+  },
+  {
+    name: "EU Academic Recognition",
+    description: "Compliant with European Higher Education Area (EHEA) standards",
+    region: "European Union",
+  },
+  {
+    name: "Bologna Process",
+    description: "Aligned with the Bologna Process framework for degree compatibility across 49 countries",
+    region: "International",
+  },
+  {
+    name: "Quality Assurance Standards",
+    description: "All partner institutions undergo rigorous quality assurance and periodic review",
+    region: "Global",
   },
 ] as const;
 

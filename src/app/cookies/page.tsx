@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+
+export const metadata: Metadata = {
+  title: "Cookie Policy",
+  description: "Techversity.ai cookie policy. Learn how we use cookies and similar technologies on our website.",
+};
 
 export default function CookiesPage() {
   return (

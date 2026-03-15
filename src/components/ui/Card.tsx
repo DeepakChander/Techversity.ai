@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useRef, useCallback } from "react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface CardProps {
@@ -23,18 +23,30 @@ export function Card({
 
   const rotateX = useTransform(mouseY, [0, 1], [5, -5]);
   const rotateY = useTransform(mouseX, [0, 1], [-5, 5]);
+  const springRotateX = useSpring(rotateX, { damping: 30, stiffness: 200 });
+  const springRotateY = useSpring(rotateY, { damping: 30, stiffness: 200 });
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current || !tilt) return;
-    const rect = ref.current.getBoundingClientRect();
-    mouseX.set((e.clientX - rect.left) / rect.width);
-    mouseY.set((e.clientY - rect.top) / rect.height);
-  };
+  // Compute glow gradient from mouse position
+  const glowBackground = useTransform(
+    [mouseX, mouseY],
+    ([mx, my]: number[]) =>
+      `radial-gradient(600px circle at ${mx * 100}% ${my * 100}%, rgba(26,109,255,0.1), transparent 40%)`
+  );
 
-  const handleMouseLeave = () => {
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (!ref.current || !tilt) return;
+      const rect = ref.current.getBoundingClientRect();
+      mouseX.set((e.clientX - rect.left) / rect.width);
+      mouseY.set((e.clientY - rect.top) / rect.height);
+    },
+    [tilt, mouseX, mouseY]
+  );
+
+  const handleMouseLeave = useCallback(() => {
     mouseX.set(0.5);
     mouseY.set(0.5);
-  };
+  }, [mouseX, mouseY]);
 
   return (
     <motion.div
@@ -49,8 +61,8 @@ export function Card({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateX: tilt ? rotateX : 0,
-        rotateY: tilt ? rotateY : 0,
+        rotateX: tilt ? springRotateX : 0,
+        rotateY: tilt ? springRotateY : 0,
         transformPerspective: 1200,
         transformStyle: "preserve-3d",
       }}
@@ -61,13 +73,7 @@ export function Card({
       {glow && (
         <motion.div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: useTransform(
-              [mouseX, mouseY],
-              ([mx, my]: number[]) =>
-                `radial-gradient(600px circle at ${mx * 100}% ${my * 100}%, rgba(26,109,255,0.1), transparent 40%)`
-            ),
-          }}
+          style={{ background: glowBackground }}
         />
       )}
       {children}

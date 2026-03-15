@@ -6,6 +6,7 @@ import { Award, Briefcase, GraduationCap, BookOpen, ArrowRight } from "lucide-re
 import { PROGRAMS } from "@/lib/constants";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { PreFooter } from "@/components/layout/PreFooter";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 
@@ -99,6 +100,7 @@ export default function ProgramsPage() {
         </section>
       </main>
       </div>
+      <PreFooter />
       <Footer />
     </>
   );

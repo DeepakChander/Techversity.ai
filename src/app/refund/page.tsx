@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+
+export const metadata: Metadata = {
+  title: "Refund Policy",
+  description: "Techversity.ai refund policy. Understand our refund conditions and how to request a refund.",
+};
 
 export default function RefundPage() {
   return (

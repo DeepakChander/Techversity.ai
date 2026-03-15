@@ -4,7 +4,6 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Seeded pseudo-random for deterministic results
 function seededRandom(seed: number): number {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
   return x - Math.floor(x);
@@ -14,7 +13,7 @@ function Particles() {
   const meshRef = useRef<THREE.Points>(null);
   const { viewport } = useThree();
 
-  const count = 3000;
+  const count = 5000;
 
   const { positions, colors, originalPositions } = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -32,45 +31,50 @@ function Particles() {
       const section = r2;
       let x: number, y: number, z: number;
 
-      if (section < 0.35) {
+      if (section < 0.3) {
+        // Body - central ellipsoid
         const angle = t * Math.PI * 2;
-        const bodyWidth = 0.8 + r3 * 0.3;
-        const bodyHeight = 1.5 + r4 * 0.5;
-        x = Math.cos(angle) * bodyWidth * (0.3 + r5 * 0.7);
-        y = Math.sin(angle) * bodyHeight * 0.5 - 0.2;
-        z = (r3 - 0.5) * 0.3;
-      } else if (section < 0.6) {
-        const wingSpread = t * 2.5;
-        const wingCurve = Math.sin(t * Math.PI) * 1.2;
-        x = -wingSpread - 0.3;
-        y = wingCurve * (1 - t * 0.3) + 0.3;
-        z = (r3 - 0.5) * 0.2;
-        x += (r4 - 0.5) * 0.4;
-        y += (r5 - 0.5) * 0.3;
-      } else if (section < 0.85) {
-        const wingSpread = t * 2.5;
-        const wingCurve = Math.sin(t * Math.PI) * 1.2;
-        x = wingSpread + 0.3;
-        y = wingCurve * (1 - t * 0.3) + 0.3;
-        z = (r3 - 0.5) * 0.2;
-        x += (r4 - 0.5) * 0.4;
-        y += (r5 - 0.5) * 0.3;
-      } else if (section < 0.92) {
+        const bodyWidth = 0.6 + r3 * 0.4;
+        const bodyHeight = 1.2 + r4 * 0.6;
+        x = Math.cos(angle) * bodyWidth * (0.2 + r5 * 0.8);
+        y = Math.sin(angle) * bodyHeight * 0.4 - 0.1;
+        z = (r3 - 0.5) * 0.35;
+      } else if (section < 0.55) {
+        // Left wing
+        const wingSpread = t * 3.0;
+        const wingCurve = Math.sin(t * Math.PI) * 1.4;
+        x = -wingSpread - 0.2;
+        y = wingCurve * (1 - t * 0.4) + 0.4;
+        z = (r3 - 0.5) * 0.25;
+        x += (r4 - 0.5) * 0.5;
+        y += (r5 - 0.5) * 0.35;
+      } else if (section < 0.8) {
+        // Right wing
+        const wingSpread = t * 3.0;
+        const wingCurve = Math.sin(t * Math.PI) * 1.4;
+        x = wingSpread + 0.2;
+        y = wingCurve * (1 - t * 0.4) + 0.4;
+        z = (r3 - 0.5) * 0.25;
+        x += (r4 - 0.5) * 0.5;
+        y += (r5 - 0.5) * 0.35;
+      } else if (section < 0.9) {
+        // Head - sphere at top
         const angle = t * Math.PI * 2;
-        const headR = 0.25 + r3 * 0.15;
-        x = Math.cos(angle) * headR;
-        y = Math.sin(angle) * headR + 1.2;
-        z = (r4 - 0.5) * 0.15;
+        const phi = r3 * Math.PI;
+        const headR = 0.3 + r4 * 0.15;
+        x = Math.cos(angle) * Math.sin(phi) * headR;
+        y = Math.sin(angle) * Math.sin(phi) * headR + 1.4;
+        z = Math.cos(phi) * headR * 0.5;
       } else {
-        const tailLength = t * 2;
-        const tailSpread = Math.sin(t * Math.PI * 3) * 0.5 * t;
-        x = tailSpread;
-        y = -tailLength - 0.8;
-        z = (r3 - 0.5) * 0.2;
+        // Tail feathers - flowing down
+        const tailLength = t * 2.5;
+        const tailSpread = Math.sin(t * Math.PI * 4) * 0.6 * t;
+        x = tailSpread + (r4 - 0.5) * 0.3;
+        y = -tailLength - 0.6;
+        z = (r3 - 0.5) * 0.25 + Math.cos(t * Math.PI * 3) * 0.1;
       }
 
-      // Fixed scale - don't depend on viewport to avoid re-creating on resize
-      const scale = 1.8;
+      const scale = 1.6;
       positions[i * 3] = x * scale;
       positions[i * 3 + 1] = y * scale;
       positions[i * 3 + 2] = z * scale;
@@ -79,15 +83,35 @@ function Particles() {
       originalPositions[i * 3 + 1] = positions[i * 3 + 1];
       originalPositions[i * 3 + 2] = positions[i * 3 + 2];
 
-      // Color gradient: blue → cyan → coral based on y position
-      const colorT = (y + 1.5) / 3;
-      const r = THREE.MathUtils.lerp(0.1, 1.0, colorT > 0.6 ? (colorT - 0.6) * 2.5 : 0);
-      const g = THREE.MathUtils.lerp(0.43, 0.9, colorT > 0.3 && colorT < 0.7 ? 1 : 0.3);
-      const b = THREE.MathUtils.lerp(1.0, 0.42, colorT);
+      // Color gradient: blue body → cyan wings → coral/orange head
+      const normalizedY = (y + 1.5) / 3.5;
+      let cr: number, cg: number, cb: number;
 
-      colors[i * 3] = r;
-      colors[i * 3 + 1] = g;
-      colors[i * 3 + 2] = b;
+      if (section >= 0.8 && section < 0.9) {
+        // Head: coral to orange
+        cr = 1.0;
+        cg = 0.42 + r3 * 0.2;
+        cb = 0.26 + r4 * 0.2;
+      } else if (section >= 0.3 && section < 0.8) {
+        // Wings: cyan gradient
+        cr = 0.0;
+        cg = 0.7 + normalizedY * 0.3;
+        cb = 1.0;
+      } else if (section >= 0.9) {
+        // Tail: purple to blue
+        cr = 0.48;
+        cg = 0.18;
+        cb = 0.97;
+      } else {
+        // Body: blue
+        cr = 0.1;
+        cg = 0.43;
+        cb = 1.0;
+      }
+
+      colors[i * 3] = cr;
+      colors[i * 3 + 1] = cg;
+      colors[i * 3 + 2] = cb;
     }
 
     return { positions, colors, originalPositions };
@@ -107,33 +131,35 @@ function Particles() {
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
 
-      const breathX = Math.sin(time * 0.8 + i * 0.01) * 0.015;
-      const breathY = Math.cos(time * 0.6 + i * 0.015) * 0.02;
-      const breathZ = Math.sin(time * 1.0 + i * 0.02) * 0.008;
+      // Gentle breathing/floating
+      const breathX = Math.sin(time * 0.7 + i * 0.008) * 0.02;
+      const breathY = Math.cos(time * 0.5 + i * 0.012) * 0.025;
+      const breathZ = Math.sin(time * 0.9 + i * 0.015) * 0.01;
 
       let targetX = originalPositions[i3] + breathX;
       let targetY = originalPositions[i3 + 1] + breathY;
       let targetZ = originalPositions[i3 + 2] + breathZ;
 
-      // Mouse repulsion
+      // Mouse magnetic repulsion
       const dx = targetX - mx;
       const dy = targetY - my;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const maxDist = 1.2;
+      const maxDist = 1.5;
 
-      if (dist < maxDist && dist > 0) {
-        const force = (1 - dist / maxDist) * 0.25;
+      if (dist < maxDist && dist > 0.01) {
+        const force = (1 - dist / maxDist) * 0.3;
         targetX += (dx / dist) * force;
         targetY += (dy / dist) * force;
       }
 
-      pos[i3] += (targetX - pos[i3]) * 0.08;
-      pos[i3 + 1] += (targetY - pos[i3 + 1]) * 0.08;
-      pos[i3 + 2] += (targetZ - pos[i3 + 2]) * 0.08;
+      // Smooth interpolation
+      pos[i3] += (targetX - pos[i3]) * 0.06;
+      pos[i3 + 1] += (targetY - pos[i3 + 1]) * 0.06;
+      pos[i3 + 2] += (targetZ - pos[i3 + 2]) * 0.06;
     }
 
     geometry.attributes.position.needsUpdate = true;
-    meshRef.current.rotation.y = Math.sin(time * 0.2) * 0.05;
+    meshRef.current.rotation.y = Math.sin(time * 0.15) * 0.05;
   });
 
   return (
@@ -143,10 +169,10 @@ function Particles() {
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={1.5}
+        size={1.8}
         vertexColors
         transparent
-        opacity={0.7}
+        opacity={0.75}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -157,9 +183,9 @@ function Particles() {
 
 export function PhoenixParticlesCanvas() {
   return (
-    <div className="absolute inset-0 z-0 opacity-60">
+    <div className="absolute inset-0 z-0 opacity-70">
       <Canvas
-        camera={{ position: [0, 0, 8], fov: 60 }}
+        camera={{ position: [0, 0, 8], fov: 55 }}
         gl={{ antialias: false, alpha: true }}
         style={{ background: "transparent" }}
         dpr={[1, 1.5]}

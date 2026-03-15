@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { PreFooter } from "@/components/layout/PreFooter";
 import { Button } from "@/components/ui/Button";
 
 const schema = z.object({
@@ -26,6 +27,12 @@ const schema = z.object({
 });
 
 type FormData = z.infer<typeof schema>;
+
+const programLabels: Record<string, string> = {
+  "honorary-doctorate": "Honorary Doctorate",
+  "dba": "Doctor of Business Administration (DBA)",
+  "phd": "Doctor of Philosophy (PhD)",
+};
 
 const steps = [
   { title: "Personal Info", fields: ["firstName", "lastName", "email", "phone", "country"] },
@@ -74,7 +81,7 @@ export default function ApplyPage() {
       <>
         <div className="main-content">
         <Navbar />
-        <main className="min-h-screen flex items-center justify-center pt-20">
+        <main id="main-content" className="min-h-screen flex items-center justify-center pt-20">
           <motion.div
             className="max-w-md mx-auto px-6 text-center"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -95,6 +102,7 @@ export default function ApplyPage() {
           </motion.div>
         </main>
         </div>
+        <PreFooter />
         <Footer />
       </>
     );
@@ -104,7 +112,7 @@ export default function ApplyPage() {
     <>
       <div className="main-content">
       <Navbar />
-      <main className="min-h-screen pt-32 pb-20">
+      <main id="main-content" className="min-h-screen pt-32 pb-20">
         <div className="max-w-2xl mx-auto px-6">
           {/* Header */}
           <motion.div
@@ -339,7 +347,7 @@ export default function ApplyPage() {
                       </div>
                       <div>
                         <span className="text-text-muted">Program:</span>
-                        <p className="text-text-primary">{watchAll.program}</p>
+                        <p className="text-text-primary">{programLabels[watchAll.program] || watchAll.program}</p>
                       </div>
                       <div>
                         <span className="text-text-muted">Field:</span>
@@ -416,6 +424,7 @@ export default function ApplyPage() {
         </div>
       </main>
       </div>
+      <PreFooter />
       <Footer />
     </>
   );

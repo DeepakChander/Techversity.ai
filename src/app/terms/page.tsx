@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions",
+  description: "Techversity.ai terms and conditions. Understand your rights and responsibilities when using our services.",
+};
 
 export default function TermsPage() {
   return (

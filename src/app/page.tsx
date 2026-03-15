@@ -3,7 +3,9 @@
 import { Preloader } from "@/components/layout/Preloader";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { PreFooter } from "@/components/layout/PreFooter";
 import { Hero } from "@/components/sections/home/Hero";
+import { SocialProof } from "@/components/sections/home/SocialProof";
 import { Programs } from "@/components/sections/home/Programs";
 import { HowItWorks } from "@/components/sections/home/HowItWorks";
 import { WhyUs } from "@/components/sections/home/WhyUs";
@@ -17,8 +19,9 @@ export default function Home() {
       <Preloader />
       <div className="main-content">
         <Navbar />
-        <main>
+        <main id="main-content">
           <Hero />
+          <SocialProof />
           <Programs />
           <HowItWorks />
           <WhyUs />
@@ -26,6 +29,7 @@ export default function Home() {
           <FAQ />
           <FinalCTA />
         </main>
+        <PreFooter />
       </div>
       <Footer />
     </>

@@ -15,7 +15,8 @@ export function useGSAP(
   scope?: React.RefObject<HTMLElement | null>
 ) {
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    let ctx: gsap.Context;
+    ctx = gsap.context(() => {
       callback(ctx);
     }, scope?.current || undefined);
 

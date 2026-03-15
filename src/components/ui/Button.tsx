@@ -64,7 +64,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     if (href) {
       return (
         <motion.div {...motionProps} className="inline-flex">
-          <Link href={href} className={classes}>
+          <Link href={href} className={classes} onClick={onClick}>
             {children}
           </Link>
         </motion.div>

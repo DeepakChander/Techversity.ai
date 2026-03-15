@@ -1,55 +1,131 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Check } from "lucide-react";
+import { motion } from "framer-motion";
 import { WHY_US_POINTS } from "@/lib/constants";
+import { useGSAP, gsap } from "@/hooks/useGSAP";
+
+function AnimatedCheckmark({ delay = 0 }: { delay?: number }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      className="flex-shrink-0"
+    >
+      <motion.circle
+        cx="10"
+        cy="10"
+        r="9"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        className="text-cyan/30"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      />
+      <motion.path
+        d="M6 10.5L9 13.5L14.5 7"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-cyan"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: delay + 0.3, ease: "easeOut" }}
+      />
+    </svg>
+  );
+}
 
 export function WhyUs() {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.15 });
+  const headingRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!headingRef.current) return;
+
+    // Character-by-character reveal for main heading
+    const chars = headingRef.current.querySelectorAll(".why-char");
+    gsap.from(chars, {
+      opacity: 0,
+      y: 60,
+      rotateX: 90,
+      duration: 0.8,
+      stagger: 0.025,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: headingRef.current,
+        start: "top 80%",
+        once: true,
+      },
+    });
+  }, []);
+
+  const headingText = "Why Techversity.AI?";
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-14 lg:py-20 overflow-hidden"
+      className="section-light relative py-20 lg:py-28 overflow-hidden"
       id="why-us"
     >
-      {/* Background accents */}
-      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-blue-start/[0.04] blur-[100px]" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-cyan/[0.03] blur-[120px]" />
+      {/* Subtle background accents */}
+      <div className="absolute top-20 left-10 w-80 h-80 rounded-full bg-blue-start/[0.03] blur-[150px]" aria-hidden="true" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-cyan/[0.03] blur-[150px]" aria-hidden="true" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* Left - Heading */}
+          {/* Left - Heading with character reveal */}
           <div className="lg:sticky lg:top-32">
             <motion.span
-              className="inline-block text-sm font-medium text-cyan uppercase tracking-widest mb-6"
+              className="inline-block text-sm font-medium text-blue-start uppercase tracking-widest mb-6"
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
               Why Choose Us
             </motion.span>
 
-            <motion.h2
-              className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-text-primary mb-6 leading-[1.15]"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              Why{" "}
-              <span className="bg-gradient-to-r from-blue-start to-cyan bg-clip-text text-transparent">
-                Techversity
-              </span>
-              <span className="text-cyan">.AI</span>?
-            </motion.h2>
+            <div ref={headingRef} className="mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold leading-[1.15]" style={{ perspective: "800px" }}>
+                {headingText.split("").map((char, i) => (
+                  <span
+                    key={i}
+                    className="why-char inline-block"
+                    style={{
+                      display: char === " " ? "inline" : "inline-block",
+                      color:
+                        char === "." || (i >= 15 && i <= 17)
+                          ? "#00e5ff"
+                          : i >= 4 && i <= 14
+                          ? "transparent"
+                          : "#ffffff",
+                      backgroundImage:
+                        i >= 4 && i <= 14
+                          ? "linear-gradient(to right, #1a6dff, #00e5ff)"
+                          : "none",
+                      backgroundClip: i >= 4 && i <= 14 ? "text" : "unset",
+                      WebkitBackgroundClip: i >= 4 && i <= 14 ? "text" : "unset",
+                    }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </h2>
+            </div>
 
             <motion.p
-              className="text-text-secondary text-lg max-w-md leading-relaxed"
+              className="text-slate-600 text-lg max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.3, duration: 0.6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.6 }}
             >
               We&apos;re not a degree mill. We&apos;re a bridge between your
               professional excellence and legitimate academic recognition.
@@ -59,45 +135,60 @@ export function WhyUs() {
             <motion.div
               className="flex gap-8 mt-10"
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.5, duration: 0.6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.7, duration: 0.6 }}
             >
               <div>
-                <div className="text-3xl font-heading font-bold text-cyan">98%</div>
-                <div className="text-xs text-text-muted mt-1">Acceptance Rate</div>
+                <div className="text-3xl font-heading font-bold text-blue-start">
+                  98%
+                </div>
+                <div className="text-xs text-slate-500 mt-1">
+                  Acceptance Rate
+                </div>
               </div>
-              <div className="w-px bg-white/10" />
+              <div className="w-px bg-slate-200" />
               <div>
-                <div className="text-3xl font-heading font-bold text-cyan">4hrs</div>
-                <div className="text-xs text-text-muted mt-1">Response Time</div>
+                <div className="text-3xl font-heading font-bold text-blue-start">
+                  4hrs
+                </div>
+                <div className="text-xs text-slate-500 mt-1">
+                  Response Time
+                </div>
               </div>
             </motion.div>
           </div>
 
-          {/* Right - Trust bullets */}
+          {/* Right - Trust bullets with spring animation + SVG checkmark draw */}
           <div className="space-y-3">
             {WHY_US_POINTS.map((point, i) => (
               <motion.div
                 key={point.title}
-                className="group relative flex items-start gap-4 p-5 rounded-xl border border-transparent hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300"
-                initial={{ opacity: 0, x: 30 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                className="group relative flex items-start gap-4 p-5 rounded-xl border border-transparent hover:bg-slate-50 hover:border-slate-200 transition-all duration-300"
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
                 transition={{
-                  delay: 0.1 * i + 0.2,
-                  duration: 0.5,
-                  ease: [0.22, 1, 0.36, 1],
+                  delay: 0.08 * i + 0.2,
+                  duration: 0.6,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 15,
                 }}
               >
-                {/* Checkmark */}
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-cyan/10 flex items-center justify-center text-cyan mt-0.5">
-                  <Check className="w-4 h-4" />
+                {/* Active left border on hover */}
+                <div className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full bg-gradient-to-b from-blue-start to-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* SVG Checkmark with draw animation */}
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mt-0.5">
+                  <AnimatedCheckmark delay={0.08 * i + 0.3} />
                 </div>
 
                 <div>
-                  <h4 className="text-text-primary font-semibold mb-1">
+                  <h4 className="text-slate-900 font-semibold mb-1">
                     {point.title}
                   </h4>
-                  <p className="text-text-muted text-sm leading-relaxed">
+                  <p className="text-slate-500 text-sm leading-relaxed">
                     {point.description}
                   </p>
                 </div>
