@@ -164,7 +164,7 @@ export function Programs() {
   return (
     <section
       ref={sectionRef}
-      className="section-light relative py-20 lg:py-28 overflow-hidden"
+      className="relative py-20 lg:py-28 overflow-hidden bg-slate-50"
       id="programs"
     >
       {/* Subtle background accent */}

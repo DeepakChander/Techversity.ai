@@ -13,7 +13,7 @@ const PARTICLES = Array.from({ length: 24 }, (_, i) => {
     startY: Math.sin(angle) * radius,
     burstX: Math.cos(angle) * 80,
     burstY: Math.sin(angle) * 80,
-    color: i < 8 ? "#1a6dff" : i < 16 ? "#00e5ff" : "#ff6b6b",
+    color: i < 8 ? "#3A82FF" : i < 16 ? "#22D3EE" : "#ff6b6b",
     size: 1 + seed * 2,
   };
 });
@@ -43,7 +43,7 @@ export function Preloader() {
     <AnimatePresence>
       {isLoading && (
         <motion.div
-          className="fixed inset-0 z-[9998] bg-bg-primary flex flex-col items-center justify-center"
+          className="fixed inset-0 z-[9998] bg-white flex flex-col items-center justify-center"
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
@@ -111,17 +111,17 @@ export function Preloader() {
 
           {/* Brand name */}
           <motion.div
-            className="font-heading text-xl font-bold text-text-primary"
+            className="font-heading text-xl font-bold text-slate-900"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            TECHVERSITY<span className="text-cyan">.AI</span>
+            TECHVERSITY<span className="text-blue-start">.AI</span>
           </motion.div>
 
           {/* Progress bar */}
           <motion.div
-            className="w-40 h-0.5 bg-white/10 rounded-full overflow-hidden mt-4"
+            className="w-40 h-0.5 bg-slate-200 rounded-full overflow-hidden mt-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}

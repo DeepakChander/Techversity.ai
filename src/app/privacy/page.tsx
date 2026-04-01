@@ -14,10 +14,10 @@ export default function PrivacyPage() {
       <Navbar />
       <main className="min-h-screen pt-32 pb-20">
         <div className="max-w-3xl mx-auto px-6">
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-text-primary mb-8">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 mb-8">
             Privacy Policy
           </h1>
-          <div className="prose prose-invert max-w-none space-y-6 text-text-secondary text-sm leading-relaxed">
+          <div className="prose prose max-w-none space-y-6 text-slate-600 text-sm leading-relaxed">
             <p>
               <strong>Last Updated:</strong> March 2026
             </p>
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
               website or use our services.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Information We Collect
             </h2>
             <p>We may collect information about you in a variety of ways:</p>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
               </li>
             </ul>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               How We Use Your Information
             </h2>
             <ul className="list-disc pl-6 space-y-2">
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
               <li>Comply with legal obligations</li>
             </ul>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Data Sharing
             </h2>
             <p>
@@ -70,7 +70,7 @@ export default function PrivacyPage() {
               information to third parties.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Contact Us
             </h2>
             <p>
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
               us at{" "}
               <a
                 href="mailto:admissions@techversity.ai"
-                className="text-cyan hover:underline"
+                className="text-blue-start hover:underline"
               >
                 admissions@techversity.ai
               </a>

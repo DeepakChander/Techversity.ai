@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,111 +8,136 @@ import {
   Mail,
   ArrowUpRight,
   ArrowRight,
-  MapPin,
   Globe,
   Shield,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Youtube,
   Sparkles,
+  Phone,
+  MapPin,
 } from "lucide-react";
 import { SITE_CONFIG, FOOTER_LINKS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
+import { Marquee } from "@/components/ui/Marquee";
+import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import {
+  staggerContainer,
+  staggerItem,
+  fadeUp,
+  lineReveal,
+  EASE,
+} from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
-/* ─── Infinite scrolling marquee ─── */
-function Marquee({
-  children,
-  speed = 30,
-  reverse = false,
-}: {
-  children: React.ReactNode;
-  speed?: number;
-  reverse?: boolean;
-}) {
-  return (
-    <div className="overflow-hidden whitespace-nowrap" aria-hidden="true">
-      <div
-        className="inline-flex"
-        style={{
-          animation: `marquee ${speed}s linear infinite ${reverse ? "reverse" : ""}`,
-        }}
-      >
-        {children}
-        {children}
-      </div>
-    </div>
-  );
-}
-
-/* ─── Animated counter for footer stats ─── */
-function FooterStat({
-  value,
-  label,
-  delay = 0,
-}: {
-  value: string;
-  label: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-
-  return (
-    <motion.div
-      ref={ref}
-      className="text-center"
-      initial={{ opacity: 0, y: 16 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <div className="text-2xl md:text-3xl font-heading font-bold text-text-primary tracking-tight mb-1">
-        {value}
-      </div>
-      <div className="text-[10px] text-text-muted uppercase tracking-[0.15em]">
-        {label}
-      </div>
-    </motion.div>
-  );
-}
+/* ─── Social links ─── */
+const SOCIAL_LINKS = [
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Youtube, href: "#", label: "YouTube" },
+];
 
 /* ─── Animated link with underline reveal ─── */
 function FooterLink({
   href,
   children,
   external = false,
-  delay = 0,
 }: {
   href: string;
   children: React.ReactNode;
   external?: boolean;
-  delay?: number;
 }) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const isInView = useInView(ref, { once: true });
-
   const Component = external ? "a" : Link;
   const externalProps = external
     ? { target: "_blank", rel: "noopener noreferrer" }
     : {};
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -8 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <motion.li variants={staggerItem}>
       <Component
-        ref={ref as any}
         href={href}
-        className="group relative inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-text-primary transition-colors duration-300 py-1"
-        {...externalProps}
+        className="group relative inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors duration-300 py-1.5"
+        {...(externalProps as any)}
       >
         <span className="relative">
           {children}
           <span className="absolute -bottom-px left-0 w-0 h-px bg-gradient-to-r from-blue-start to-cyan group-hover:w-full transition-all duration-300" />
         </span>
-        <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+        {external && (
+          <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+        )}
       </Component>
+    </motion.li>
+  );
+}
+
+/* ─── Footer column ─── */
+function FooterColumn({
+  title,
+  links,
+  delay = 0,
+}: {
+  title: string;
+  links: readonly { label: string; href: string }[];
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ delay }}
+    >
+      <h4 className="font-heading text-xs font-semibold text-white mb-5 uppercase tracking-[0.15em] flex items-center gap-2">
+        <span className="w-4 h-px bg-gradient-to-r from-blue-start to-transparent" />
+        {title}
+      </h4>
+      <motion.ul
+        className="space-y-0.5"
+        variants={staggerContainer(0.05, delay)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        {links.map((link) => (
+          <FooterLink key={link.href + link.label} href={link.href}>
+            {link.label}
+          </FooterLink>
+        ))}
+      </motion.ul>
     </motion.div>
   );
 }
+
+/* ─── Stats ─── */
+const FOOTER_STATS = [
+  { value: 12, suffix: "+", label: "Countries Served" },
+  { value: 4, suffix: "", label: "Partner Universities" },
+  { value: 98, suffix: "%", label: "Acceptance Rate" },
+  { value: 4.8, suffix: "/5", label: "Client Satisfaction", decimals: 1 },
+];
+
+/* ─── Marquee texts ─── */
+const MARQUEE_ROW_1 = [
+  "HONORARY DOCTORATE",
+  "DOCTOR OF BUSINESS ADMINISTRATION",
+  "DOCTOR OF PHILOSOPHY",
+  "ACCREDITED UNIVERSITIES",
+  "GLOBAL RECOGNITION",
+  "PROFESSIONAL EXCELLENCE",
+];
+
+const MARQUEE_ROW_2 = [
+  "CAREER ADVANCEMENT",
+  "ACADEMIC EXCELLENCE",
+  "RESEARCH INNOVATION",
+  "LEADERSHIP CREDENTIAL",
+  "12+ COUNTRIES",
+  "4.8/5 SATISFACTION",
+];
 
 /* ════════════════════════════════════════════
    FOOTER — Premium animated design
@@ -123,64 +148,64 @@ export function Footer() {
   const isInView = useInView(footerRef, { once: true, amount: 0.1 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.5 });
 
-  const { scrollYProgress } = useScroll({
-    target: footerRef,
-    offset: ["start end", "end end"],
-  });
-
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [60, 0]);
-  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
-
   return (
-    <footer ref={footerRef} className="relative bg-[#060918] overflow-hidden">
+    <footer ref={footerRef} className="relative bg-slate-900 overflow-hidden">
       {/* ─── Background effects ─── */}
       <div
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
         }}
         aria-hidden="true"
       />
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-[0.03]"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-[0.05]"
         style={{
           background:
-            "radial-gradient(ellipse, rgba(26,109,255,0.8) 0%, transparent 60%)",
+            "radial-gradient(ellipse, rgba(58,130,255,0.6) 0%, transparent 60%)",
         }}
         aria-hidden="true"
       />
 
       {/* ─── CTA Banner Section ─── */}
-      <div ref={ctaRef} className="relative border-b border-white/[0.04]">
+      <div ref={ctaRef} className="relative border-b border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
           <motion.div
             className="relative rounded-3xl overflow-hidden"
             initial={{ opacity: 0, y: 30 }}
             animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease: EASE.default }}
           >
-            {/* CTA background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-start/10 via-cyan/5 to-purple/10" />
+            {/* CTA background with animated gradient */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(-45deg, rgba(58,130,255,0.12), rgba(34,211,238,0.08), rgba(123,47,247,0.1), rgba(58,130,255,0.12))",
+                backgroundSize: "400% 400%",
+                animation: "gradient-shift 15s ease infinite",
+              }}
+            />
             <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-3xl" />
             <div className="absolute inset-[0] rounded-3xl border border-white/[0.08]" />
 
-            <div className="relative z-10 px-8 py-12 md:px-12 md:py-14 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="text-center md:text-left">
+            <div className="relative z-10 px-8 py-12 md:px-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="text-center md:text-left max-w-lg">
                 <motion.div
                   className="flex items-center gap-2 mb-3 justify-center md:justify-start"
                   initial={{ opacity: 0, x: -12 }}
                   animate={ctaInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.2, duration: 0.6 }}
                 >
-                  <Sparkles className="w-4 h-4 text-cyan" />
-                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-cyan">
+                  <Sparkles className="w-4 h-4 text-blue-start" />
+                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-blue-start">
                     Start Your Journey
                   </span>
                 </motion.div>
                 <motion.h3
-                  className="text-2xl md:text-3xl font-heading font-bold text-text-primary mb-2"
+                  className="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-white mb-3"
                   initial={{ opacity: 0, y: 12 }}
                   animate={ctaInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.3, duration: 0.6 }}
@@ -188,7 +213,7 @@ export function Footer() {
                   Ready to transform your career?
                 </motion.h3>
                 <motion.p
-                  className="text-text-muted text-sm max-w-md"
+                  className="text-slate-400 text-sm md:text-base max-w-md"
                   initial={{ opacity: 0, y: 12 }}
                   animate={ctaInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.4, duration: 0.6 }}
@@ -219,14 +244,7 @@ export function Footer() {
       {/* ─── Dual marquee decoration ─── */}
       <div className="border-b border-white/[0.03] py-4 space-y-3">
         <Marquee speed={45}>
-          {[
-            "HONORARY DOCTORATE",
-            "DOCTOR OF BUSINESS ADMINISTRATION",
-            "DOCTOR OF PHILOSOPHY",
-            "ACCREDITED UNIVERSITIES",
-            "GLOBAL RECOGNITION",
-            "PROFESSIONAL EXCELLENCE",
-          ].map((text, i) => (
+          {MARQUEE_ROW_1.map((text, i) => (
             <span key={i} className="inline-flex items-center mx-8">
               <span
                 className="text-[40px] lg:text-[56px] font-heading font-bold tracking-tight"
@@ -242,14 +260,7 @@ export function Footer() {
           ))}
         </Marquee>
         <Marquee speed={50} reverse>
-          {[
-            "CAREER ADVANCEMENT",
-            "ACADEMIC EXCELLENCE",
-            "RESEARCH INNOVATION",
-            "LEADERSHIP CREDENTIAL",
-            "12+ COUNTRIES",
-            "4.8/5 SATISFACTION",
-          ].map((text, i) => (
+          {MARQUEE_ROW_2.map((text, i) => (
             <span key={i} className="inline-flex items-center mx-8">
               <span
                 className="text-[32px] lg:text-[44px] font-heading font-bold tracking-tight"
@@ -267,19 +278,20 @@ export function Footer() {
       </div>
 
       {/* ─── Main footer content ─── */}
-      <motion.div
-        className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-20 pb-8"
-        style={{ y: parallaxY, opacity: parallaxOpacity }}
-      >
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-20 pb-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-8 lg:gap-6">
           {/* Brand column — spans 4 cols */}
           <motion.div
             className="col-span-2 md:col-span-3 lg:col-span-4"
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <Link href="/" className="inline-flex items-center gap-3 mb-5 group">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-3 mb-5 group"
+            >
               <motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -289,31 +301,49 @@ export function Footer() {
                   alt="Techversity.ai"
                   width={44}
                   height={44}
-                  className="w-11 h-11 rounded-full object-cover ring-2 ring-white/[0.06] group-hover:ring-cyan/30 transition-all duration-500"
+                  className="w-11 h-11 rounded-full object-cover ring-2 ring-white/[0.1] group-hover:ring-blue-start/40 transition-all duration-500"
                 />
               </motion.div>
               <div>
-                <span className="font-heading text-lg font-bold text-text-primary block">
-                  TECHVERSITY<span className="text-cyan">.AI</span>
+                <span className="font-heading text-lg font-bold text-white block">
+                  TECHVERSITY<span className="text-blue-start">.AI</span>
                 </span>
-                <span className="text-[10px] text-text-muted uppercase tracking-[0.2em]">
+                <span className="text-[10px] text-slate-500 uppercase tracking-[0.2em]">
                   Powering the Techverse
                 </span>
               </div>
             </Link>
-            <p className="text-text-muted text-sm leading-relaxed max-w-xs mt-4 mb-5">
+            <p className="text-slate-400 text-sm leading-relaxed max-w-xs mt-4 mb-6">
               Premier admissions advisory connecting accomplished professionals
               with accredited universities worldwide.
             </p>
-            <a
-              href={`mailto:${SITE_CONFIG.email}`}
-              className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-cyan transition-colors group"
-            >
-              <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center group-hover:bg-cyan/10 group-hover:border-cyan/20 transition-all duration-300">
-                <Mail className="w-3.5 h-3.5" />
-              </div>
-              {SITE_CONFIG.email}
-            </a>
+
+            {/* Contact info */}
+            <div className="space-y-3 mb-6">
+              <a
+                href={`mailto:${SITE_CONFIG.email}`}
+                className="flex items-center gap-2.5 text-sm text-slate-300 hover:text-blue-start transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center group-hover:bg-blue-start/10 group-hover:border-blue-start/20 transition-all duration-300">
+                  <Mail className="w-3.5 h-3.5" />
+                </div>
+                {SITE_CONFIG.email}
+              </a>
+            </div>
+
+            {/* Social icons */}
+            <div className="flex items-center gap-2">
+              {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-slate-400 hover:text-blue-start hover:bg-blue-start/10 hover:border-blue-start/20 transition-all duration-300"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
 
             {/* Trust badges */}
             <div className="flex items-center gap-3 mt-6">
@@ -323,113 +353,95 @@ export function Footer() {
               ].map(({ icon: Icon, text }) => (
                 <div
                   key={text}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-[10px] text-text-muted"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-[10px] text-slate-400"
                 >
-                  <Icon className="w-3 h-3 text-cyan/60" />
+                  <Icon className="w-3 h-3 text-blue-start/60" />
                   {text}
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* Programs — spans 2 cols */}
-          <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
-            <h4 className="font-heading text-xs font-semibold text-text-primary mb-5 uppercase tracking-[0.15em] flex items-center gap-2">
-              <span className="w-4 h-px bg-gradient-to-r from-cyan to-transparent" />
-              Programs
-            </h4>
-            <ul className="space-y-1">
-              {FOOTER_LINKS.programs.map((link, i) => (
-                <li key={link.href}>
-                  <FooterLink href={link.href} delay={0.1 + i * 0.05}>
-                    {link.label}
-                  </FooterLink>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          {/* Programs — 2 cols */}
+          <div className="lg:col-span-2">
+            <FooterColumn title="Programs" links={FOOTER_LINKS.programs} delay={0.1} />
+          </div>
 
-          {/* Company — spans 2 cols */}
-          <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            <h4 className="font-heading text-xs font-semibold text-text-primary mb-5 uppercase tracking-[0.15em] flex items-center gap-2">
-              <span className="w-4 h-px bg-gradient-to-r from-cyan to-transparent" />
-              Company
-            </h4>
-            <ul className="space-y-1">
-              {FOOTER_LINKS.company.map((link, i) => (
-                <li key={link.href}>
-                  <FooterLink href={link.href} delay={0.15 + i * 0.05}>
-                    {link.label}
-                  </FooterLink>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          {/* University — 2 cols */}
+          <div className="lg:col-span-2">
+            <FooterColumn title="University" links={FOOTER_LINKS.university} delay={0.15} />
+          </div>
 
-          {/* Legal — spans 2 cols */}
-          <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <h4 className="font-heading text-xs font-semibold text-text-primary mb-5 uppercase tracking-[0.15em] flex items-center gap-2">
-              <span className="w-4 h-px bg-gradient-to-r from-cyan to-transparent" />
-              Legal
-            </h4>
-            <ul className="space-y-1">
-              {FOOTER_LINKS.legal.map((link, i) => (
-                <li key={link.href}>
-                  <FooterLink href={link.href} delay={0.2 + i * 0.05}>
-                    {link.label}
-                  </FooterLink>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          {/* Company — 2 cols */}
+          <div className="lg:col-span-2">
+            <FooterColumn title="Company" links={FOOTER_LINKS.company} delay={0.2} />
+          </div>
+
+          {/* Legal — 2 cols */}
+          <div className="hidden md:block lg:col-span-2">
+            <FooterColumn title="Legal" links={FOOTER_LINKS.legal} delay={0.25} />
+          </div>
         </div>
 
         {/* ─── Stats bar ─── */}
         <motion.div
           className="mt-14 pt-8 border-t border-white/[0.04]"
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.8 }}
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-            <FooterStat value="12+" label="Countries Served" delay={0.5} />
-            <FooterStat value="4" label="Partner Universities" delay={0.6} />
-            <FooterStat value="98%" label="Acceptance Rate" delay={0.7} />
-            <FooterStat value="4.8/5" label="Client Satisfaction" delay={0.8} />
+            {FOOTER_STATS.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                className="text-center"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: 0.4 + i * 0.1,
+                  duration: 0.6,
+                  ease: EASE.default,
+                }}
+              >
+                <div className="text-2xl md:text-3xl font-heading font-bold text-white tracking-tight mb-1">
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    decimals={stat.decimals || 0}
+                  />
+                </div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-[0.15em]">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
+
+        {/* ─── Mobile Legal links (shown on small screens) ─── */}
+        <div className="md:hidden mb-8">
+          <FooterColumn title="Legal" links={FOOTER_LINKS.legal} />
+        </div>
 
         {/* ─── Bottom bar ─── */}
         <motion.div
           className="pt-6 border-t border-white/[0.04] flex flex-col md:flex-row items-center justify-between gap-4"
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.8, duration: 0.6 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6, duration: 0.6 }}
         >
           <div className="flex items-center gap-3">
-            <p className="text-xs text-text-muted" suppressHydrationWarning>
+            <p className="text-xs text-slate-500" suppressHydrationWarning>
               &copy; {new Date().getFullYear()} Techversity.ai
             </p>
             <span className="w-1 h-1 rounded-full bg-white/10" />
-            <p className="text-xs text-text-muted">All rights reserved</p>
+            <p className="text-xs text-slate-500">All rights reserved</p>
           </div>
 
-          <p className="text-[11px] text-text-muted/60 max-w-md text-center md:text-right leading-relaxed">
+          <p className="text-[11px] text-slate-500/60 max-w-md text-center md:text-right leading-relaxed">
             Techversity.ai is an admissions advisory service. We are not a
             university or degree-granting institution. All degrees are conferred
             by accredited partner universities.
@@ -441,13 +453,15 @@ export function Footer() {
           className="mt-6 h-px"
           style={{
             background:
-              "linear-gradient(90deg, transparent, rgba(26,109,255,0.2), rgba(0,229,255,0.2), rgba(123,47,247,0.2), transparent)",
+              "linear-gradient(90deg, transparent, rgba(58,130,255,0.2), rgba(34,211,238,0.2), rgba(123,47,247,0.2), transparent)",
           }}
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ delay: 1, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          variants={lineReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ delay: 0.8, duration: 1.5 }}
         />
-      </motion.div>
+      </div>
     </footer>
   );
 }

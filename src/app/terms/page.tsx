@@ -14,10 +14,10 @@ export default function TermsPage() {
       <Navbar />
       <main className="min-h-screen pt-32 pb-20">
         <div className="max-w-3xl mx-auto px-6">
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-text-primary mb-8">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 mb-8">
             Terms &amp; Conditions
           </h1>
-          <div className="space-y-6 text-text-secondary text-sm leading-relaxed">
+          <div className="space-y-6 text-slate-600 text-sm leading-relaxed">
             <p>
               <strong>Last Updated:</strong> March 2026
             </p>
@@ -26,7 +26,7 @@ export default function TermsPage() {
               you agree to be bound by these Terms and Conditions.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Our Services
             </h2>
             <p>
@@ -36,7 +36,7 @@ export default function TermsPage() {
               All academic decisions are made by the respective universities.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               User Responsibilities
             </h2>
             <ul className="list-disc pl-6 space-y-2">
@@ -46,7 +46,7 @@ export default function TermsPage() {
               <li>Not misrepresent your qualifications or achievements</li>
             </ul>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Limitation of Liability
             </h2>
             <p>
@@ -55,14 +55,14 @@ export default function TermsPage() {
               limited to the fees paid for our advisory services.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Contact
             </h2>
             <p>
               For questions about these terms, contact us at{" "}
               <a
                 href="mailto:admissions@techversity.ai"
-                className="text-cyan hover:underline"
+                className="text-blue-start hover:underline"
               >
                 admissions@techversity.ai
               </a>

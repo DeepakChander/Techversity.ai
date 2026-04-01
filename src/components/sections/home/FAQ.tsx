@@ -103,7 +103,7 @@ export function FAQ() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-light relative py-20 lg:py-28" id="faq">
+    <section ref={sectionRef} className="relative py-20 lg:py-28 bg-slate-50" id="faq">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Left heading */}

@@ -14,10 +14,10 @@ export default function RefundPage() {
       <Navbar />
       <main className="min-h-screen pt-32 pb-20">
         <div className="max-w-3xl mx-auto px-6">
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-text-primary mb-8">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 mb-8">
             Refund Policy
           </h1>
-          <div className="space-y-6 text-text-secondary text-sm leading-relaxed">
+          <div className="space-y-6 text-slate-600 text-sm leading-relaxed">
             <p>
               <strong>Last Updated:</strong> March 2026
             </p>
@@ -26,7 +26,7 @@ export default function RefundPage() {
               Policy outlines the conditions under which refunds are provided.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Full Refund
             </h2>
             <p>
@@ -35,7 +35,7 @@ export default function RefundPage() {
               fees paid.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Partial Refund
             </h2>
             <ul className="list-disc pl-6 space-y-2">
@@ -50,14 +50,14 @@ export default function RefundPage() {
               <li>After enrollment is confirmed: No refund</li>
             </ul>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               How to Request a Refund
             </h2>
             <p>
               To request a refund, email us at{" "}
               <a
                 href="mailto:admissions@techversity.ai"
-                className="text-cyan hover:underline"
+                className="text-blue-start hover:underline"
               >
                 admissions@techversity.ai
               </a>{" "}

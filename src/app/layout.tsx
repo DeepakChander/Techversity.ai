@@ -19,6 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://techversity.ai"),
   title: {
     default: "Techversity.ai | Powering the Techverse of Tomorrow",
     template: "%s | Techversity.ai",
@@ -56,9 +57,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: "Techversity.ai",
+    url: "https://techversity.ai",
+    description:
+      "Premier admissions advisory connecting accomplished professionals with accredited universities for Honorary Doctorates, DBAs, and PhDs.",
+    sameAs: [],
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "admissions@techversity.ai",
+      contactType: "admissions",
+      availableLanguage: "English",
+    },
+  };
+
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body className="bg-bg-primary text-text-secondary font-sans antialiased overflow-x-hidden">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="bg-white text-slate-600 font-sans antialiased overflow-x-hidden">
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>

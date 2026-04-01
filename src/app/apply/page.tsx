@@ -72,9 +72,9 @@ export default function ApplyPage() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 rounded-xl bg-white/[0.05] border border-white/[0.08] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-cyan/50 focus:ring-1 focus:ring-cyan/20 transition-all";
-  const labelClass = "block text-sm font-medium text-text-secondary mb-1.5";
-  const errorClass = "text-xs text-coral mt-1";
+    "w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-start/50 focus:ring-1 focus:ring-blue-start/20 transition-all appearance-none";
+  const labelClass = "block text-sm font-medium text-slate-700 mb-1.5";
+  const errorClass = "text-xs text-red-500 mt-1";
 
   if (submitted) {
     return (
@@ -88,13 +88,13 @@ export default function ApplyPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="w-20 h-20 rounded-full bg-cyan/20 flex items-center justify-center mx-auto mb-6">
-              <Check className="w-10 h-10 text-cyan" />
+            <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-10 h-10 text-blue-start" />
             </div>
-            <h1 className="text-3xl font-heading font-bold text-text-primary mb-4">
+            <h1 className="text-3xl font-heading font-bold text-slate-900 mb-4">
               Application Submitted!
             </h1>
-            <p className="text-text-secondary mb-8">
+            <p className="text-slate-600 mb-8">
               Thank you for your application. Our advisory team will contact you
               within 4 hours to discuss the next steps.
             </p>
@@ -120,10 +120,10 @@ export default function ApplyPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-3xl md:text-4xl font-heading font-bold text-text-primary mb-3">
+            <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 mb-3">
               Apply Now
             </h1>
-            <p className="text-text-secondary">
+            <p className="text-slate-600">
               Start your journey to academic recognition.
             </p>
           </motion.div>
@@ -136,7 +136,7 @@ export default function ApplyPage() {
                   className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-heading font-bold transition-all ${
                     i <= step
                       ? "bg-gradient-to-br from-blue-start to-cyan text-white"
-                      : "bg-white/[0.05] border border-white/[0.08] text-text-muted"
+                      : "bg-slate-100 border border-slate-200 text-slate-400"
                   }`}
                 >
                   {i < step ? <Check className="w-4 h-4" /> : i + 1}
@@ -144,7 +144,7 @@ export default function ApplyPage() {
                 {i < steps.length - 1 && (
                   <div
                     className={`hidden sm:block w-16 lg:w-24 h-0.5 mx-2 transition-colors ${
-                      i < step ? "bg-cyan" : "bg-white/[0.08]"
+                      i < step ? "bg-blue-start" : "bg-slate-200"
                     }`}
                   />
                 )}
@@ -153,7 +153,7 @@ export default function ApplyPage() {
           </div>
 
           {/* Step title */}
-          <h2 className="text-xl font-heading font-bold text-text-primary mb-6">
+          <h2 className="text-xl font-heading font-bold text-slate-900 mb-6">
             {steps[step].title}
           </h2>
 
@@ -330,38 +330,38 @@ export default function ApplyPage() {
               {/* Step 4: Review */}
               {step === 3 && (
                 <>
-                  <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-6 space-y-3">
-                    <h3 className="font-heading font-semibold text-text-primary mb-4">
+                  <div className="rounded-xl bg-slate-50 border border-slate-200 p-6 space-y-3">
+                    <h3 className="font-heading font-semibold text-slate-900 mb-4">
                       Application Summary
                     </h3>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <span className="text-text-muted">Name:</span>
-                        <p className="text-text-primary">
+                        <span className="text-slate-500">Name:</span>
+                        <p className="text-slate-900">
                           {watchAll.firstName} {watchAll.lastName}
                         </p>
                       </div>
                       <div>
-                        <span className="text-text-muted">Email:</span>
-                        <p className="text-text-primary">{watchAll.email}</p>
+                        <span className="text-slate-500">Email:</span>
+                        <p className="text-slate-900">{watchAll.email}</p>
                       </div>
                       <div>
-                        <span className="text-text-muted">Program:</span>
-                        <p className="text-text-primary">{programLabels[watchAll.program] || watchAll.program}</p>
+                        <span className="text-slate-500">Program:</span>
+                        <p className="text-slate-900">{programLabels[watchAll.program] || watchAll.program}</p>
                       </div>
                       <div>
-                        <span className="text-text-muted">Field:</span>
-                        <p className="text-text-primary">{watchAll.field}</p>
+                        <span className="text-slate-500">Field:</span>
+                        <p className="text-slate-900">{watchAll.field}</p>
                       </div>
                       <div>
-                        <span className="text-text-muted">Role:</span>
-                        <p className="text-text-primary">
+                        <span className="text-slate-500">Role:</span>
+                        <p className="text-slate-900">
                           {watchAll.currentRole}
                         </p>
                       </div>
                       <div>
-                        <span className="text-text-muted">Experience:</span>
-                        <p className="text-text-primary">
+                        <span className="text-slate-500">Experience:</span>
+                        <p className="text-slate-900">
                           {watchAll.experience} years
                         </p>
                       </div>
@@ -371,15 +371,15 @@ export default function ApplyPage() {
                     <input
                       type="checkbox"
                       {...register("consent")}
-                      className="mt-1 accent-cyan"
+                      className="mt-1 accent-blue-start"
                     />
-                    <span className="text-sm text-text-muted">
+                    <span className="text-sm text-slate-500">
                       I agree to the{" "}
-                      <a href="/privacy" className="text-cyan hover:underline">
+                      <a href="/privacy" className="text-blue-start hover:underline">
                         Privacy Policy
                       </a>{" "}
                       and{" "}
-                      <a href="/terms" className="text-cyan hover:underline">
+                      <a href="/terms" className="text-blue-start hover:underline">
                         Terms & Conditions
                       </a>
                       . I consent to being contacted by the Techversity.ai team
@@ -399,7 +399,7 @@ export default function ApplyPage() {
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
+                  className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back

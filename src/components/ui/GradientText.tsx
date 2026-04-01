@@ -13,7 +13,7 @@ export function GradientText({
   children,
   as: Tag = "span",
   className,
-  gradient = "from-blue-start via-cyan to-coral",
+  gradient = "from-blue-start via-cyan to-purple",
 }: GradientTextProps) {
   return (
     <Tag

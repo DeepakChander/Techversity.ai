@@ -30,7 +30,7 @@ export function Card({
   const glowBackground = useTransform(
     [mouseX, mouseY],
     ([mx, my]: number[]) =>
-      `radial-gradient(600px circle at ${mx * 100}% ${my * 100}%, rgba(26,109,255,0.1), transparent 40%)`
+      `radial-gradient(600px circle at ${mx * 100}% ${my * 100}%, rgba(58,130,255,0.06), transparent 40%)`
   );
 
   const handleMouseMove = useCallback(
@@ -53,9 +53,9 @@ export function Card({
       ref={ref}
       className={cn(
         "relative rounded-2xl overflow-hidden group",
-        "bg-white/[0.03] backdrop-blur-xl border border-white/[0.08]",
+        "bg-white border border-slate-200",
         "transition-shadow duration-500",
-        "hover:shadow-[0_8px_40px_rgba(26,109,255,0.15)]",
+        "hover:shadow-lg hover:shadow-blue-start/[0.08] hover:border-blue-200",
         className
       )}
       onMouseMove={handleMouseMove}

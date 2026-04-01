@@ -22,7 +22,7 @@ export const NAV_LINKS = [
         href: "/programs/honorary-doctorate",
         description: "Recognition of outstanding professional achievements",
         icon: "Award",
-        accent: "#1a6dff",
+        accent: "#3A82FF",
         duration: "4-6 months",
       },
       {
@@ -30,7 +30,7 @@ export const NAV_LINKS = [
         href: "/programs/dba",
         description: "Advanced business research and leadership",
         icon: "Briefcase",
-        accent: "#00e5ff",
+        accent: "#22D3EE",
         duration: "18-36 months",
       },
       {
@@ -44,6 +44,33 @@ export const NAV_LINKS = [
     ],
   },
   { label: "Universities", href: "/universities" },
+  {
+    label: "About",
+    href: "/#why-us",
+    children: [
+      {
+        label: "Why Techversity",
+        href: "/#why-us",
+        description: "What sets us apart from the rest",
+        icon: "Sparkles",
+        accent: "#ff8c42",
+      },
+      {
+        label: "How It Works",
+        href: "/#how-it-works",
+        description: "Your journey in 5 simple steps",
+        icon: "Route",
+        accent: "#34d399",
+      },
+      {
+        label: "FAQs",
+        href: "/#faq",
+        description: "Answers to common questions",
+        icon: "HelpCircle",
+        accent: "#94A3B8",
+      },
+    ],
+  },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -365,11 +392,22 @@ export const FOOTER_LINKS = {
     { label: "Honorary Doctorate", href: "/programs/honorary-doctorate" },
     { label: "DBA", href: "/programs/dba" },
     { label: "PhD", href: "/programs/phd" },
+    { label: "All Programs", href: "/programs" },
+  ],
+  university: [
+    { label: "Partner Universities", href: "/universities" },
+    { label: "Accreditations", href: "/universities#accreditations" },
+    { label: "Global Network", href: "/universities#network" },
   ],
   company: [
     { label: "About Us", href: "/#why-us" },
-    { label: "Universities", href: "/universities" },
+    { label: "How It Works", href: "/#how-it-works" },
     { label: "Contact", href: "/contact" },
+    { label: "Apply Now", href: "/apply" },
+  ],
+  resources: [
+    { label: "FAQs", href: "/#faq" },
+    { label: "Blog", href: "#" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },

@@ -18,13 +18,13 @@ interface ButtonProps {
 
 const variants = {
   primary:
-    "bg-gradient-to-r from-blue-start to-blue-mid text-white hover:shadow-[0_0_30px_rgba(26,109,255,0.4)]",
+    "bg-gradient-to-r from-blue-start to-blue-mid text-white shadow-lg shadow-blue-start/20 hover:shadow-xl hover:shadow-blue-start/30",
   secondary:
-    "bg-bg-surface-light text-text-primary border border-glass-border hover:bg-blue-start/20",
+    "bg-slate-100 text-slate-900 border border-slate-200 hover:bg-slate-200",
   outline:
-    "bg-transparent text-text-primary gradient-border hover:bg-glass",
+    "bg-transparent text-slate-900 border border-slate-300 hover:bg-slate-50 hover:border-slate-400",
   ghost:
-    "bg-transparent text-text-secondary hover:text-text-primary hover:bg-glass",
+    "bg-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100",
 };
 
 const sizes = {

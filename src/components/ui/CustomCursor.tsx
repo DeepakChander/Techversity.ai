@@ -86,9 +86,9 @@ export function CustomCursor() {
           transition={{ duration: 0.2, ease: "easeOut" }}
           style={{
             background: isHovering
-              ? "rgba(0, 229, 255, 0.08)"
-              : "linear-gradient(135deg, #1a6dff, #00e5ff, #ff6b6b)",
-            border: isHovering ? "1.5px solid rgba(0, 229, 255, 0.4)" : "none",
+              ? "rgba(34, 211, 238, 0.08)"
+              : "linear-gradient(135deg, #3A82FF, #22D3EE, #ff6b6b)",
+            border: isHovering ? "1.5px solid rgba(34, 211, 238, 0.4)" : "none",
             mixBlendMode: "screen",
           }}
         />

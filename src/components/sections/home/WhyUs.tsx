@@ -20,7 +20,7 @@ function AnimatedCheckmark({ delay = 0 }: { delay?: number }) {
         r="9"
         stroke="currentColor"
         strokeWidth="1.5"
-        className="text-cyan/30"
+        className="text-blue-start/30"
         initial={{ pathLength: 0 }}
         whileInView={{ pathLength: 1 }}
         viewport={{ once: true }}
@@ -32,7 +32,7 @@ function AnimatedCheckmark({ delay = 0 }: { delay?: number }) {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-cyan"
+        className="text-blue-start"
         initial={{ pathLength: 0 }}
         whileInView={{ pathLength: 1 }}
         viewport={{ once: true }}
@@ -71,7 +71,7 @@ export function WhyUs() {
   return (
     <section
       ref={sectionRef}
-      className="section-light relative py-20 lg:py-28 overflow-hidden"
+      className="relative py-20 lg:py-28 overflow-hidden"
       id="why-us"
     >
       {/* Subtle background accents */}
@@ -102,13 +102,13 @@ export function WhyUs() {
                       display: char === " " ? "inline" : "inline-block",
                       color:
                         char === "." || (i >= 15 && i <= 17)
-                          ? "#00e5ff"
+                          ? "#0EA5E9"
                           : i >= 4 && i <= 14
                           ? "transparent"
-                          : "#ffffff",
+                          : "#0f172a",
                       backgroundImage:
                         i >= 4 && i <= 14
-                          ? "linear-gradient(to right, #1a6dff, #00e5ff)"
+                          ? "linear-gradient(to right, #3A82FF, #0EA5E9)"
                           : "none",
                       backgroundClip: i >= 4 && i <= 14 ? "text" : "unset",
                       WebkitBackgroundClip: i >= 4 && i <= 14 ? "text" : "unset",

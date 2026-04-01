@@ -21,7 +21,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
           {Array.from({ length: columns }).map((_, i) => (
             <motion.div
               key={i}
-              className="flex-1 bg-gradient-to-b from-blue-start to-coral"
+              className="flex-1 bg-gradient-to-b from-blue-start via-blue-mid to-cyan"
               initial={{ scaleY: 0 }}
               animate={{ scaleY: 0 }}
               exit={{

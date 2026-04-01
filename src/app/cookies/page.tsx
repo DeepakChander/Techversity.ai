@@ -14,10 +14,10 @@ export default function CookiesPage() {
       <Navbar />
       <main className="min-h-screen pt-32 pb-20">
         <div className="max-w-3xl mx-auto px-6">
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-text-primary mb-8">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 mb-8">
             Cookie Policy
           </h1>
-          <div className="space-y-6 text-text-secondary text-sm leading-relaxed">
+          <div className="space-y-6 text-slate-600 text-sm leading-relaxed">
             <p>
               <strong>Last Updated:</strong> March 2026
             </p>
@@ -26,7 +26,7 @@ export default function CookiesPage() {
               similar technologies when you visit our website.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               What Are Cookies
             </h2>
             <p>
@@ -36,7 +36,7 @@ export default function CookiesPage() {
               site.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Types of Cookies We Use
             </h2>
             <ul className="list-disc pl-6 space-y-2">
@@ -54,7 +54,7 @@ export default function CookiesPage() {
               </li>
             </ul>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Managing Cookies
             </h2>
             <p>
@@ -63,14 +63,14 @@ export default function CookiesPage() {
               functionality.
             </p>
 
-            <h2 className="text-xl font-heading font-semibold text-text-primary mt-8 mb-4">
+            <h2 className="text-xl font-heading font-semibold text-slate-900 mt-8 mb-4">
               Contact
             </h2>
             <p>
               For questions about our cookie practices, contact us at{" "}
               <a
                 href="mailto:admissions@techversity.ai"
-                className="text-cyan hover:underline"
+                className="text-blue-start hover:underline"
               >
                 admissions@techversity.ai
               </a>
