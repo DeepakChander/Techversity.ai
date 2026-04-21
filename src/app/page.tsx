@@ -3,15 +3,14 @@
 import { Preloader } from "@/components/layout/Preloader";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { PreFooter } from "@/components/layout/PreFooter";
-import { Hero } from "@/components/sections/home/Hero";
-import { SocialProof } from "@/components/sections/home/SocialProof";
-import { Programs } from "@/components/sections/home/Programs";
-import { HowItWorks } from "@/components/sections/home/HowItWorks";
-import { WhyUs } from "@/components/sections/home/WhyUs";
-import { Universities } from "@/components/sections/home/Universities";
-import { FAQ } from "@/components/sections/home/FAQ";
-import { FinalCTA } from "@/components/sections/home/FinalCTA";
+import { Hero } from "@/components/sections/home-v2/Hero";
+import { Record } from "@/components/sections/home-v2/Record";
+import { Pathways } from "@/components/sections/home-v2/Pathways";
+import { Advisory } from "@/components/sections/home-v2/Advisory";
+import { Confidants } from "@/components/sections/home-v2/Confidants";
+import { Method } from "@/components/sections/home-v2/Method";
+import { Voices } from "@/components/sections/home-v2/Voices";
+import { Threshold } from "@/components/sections/home-v2/Threshold";
 
 export default function Home() {
   return (
@@ -21,15 +20,14 @@ export default function Home() {
         <Navbar />
         <main id="main-content">
           <Hero />
-          <SocialProof />
-          <Programs />
-          <HowItWorks />
-          <WhyUs />
-          <Universities />
-          <FAQ />
-          <FinalCTA />
+          <Record />
+          <Pathways />
+          <Advisory />
+          <Confidants />
+          <Method />
+          <Voices />
+          <Threshold />
         </main>
-        <PreFooter />
       </div>
       <Footer />
     </>

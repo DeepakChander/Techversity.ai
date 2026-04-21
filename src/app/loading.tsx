@@ -1,7 +1,12 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-blue-start/30 border-t-blue-start rounded-full animate-spin" />
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{ backgroundColor: "var(--color-canvas-ivory)" }}
+    >
+      <div className="type-mono-meta text-[var(--color-ink-muted)]">
+        ESTABLISHING THE RECORD
+      </div>
     </div>
   );
 }

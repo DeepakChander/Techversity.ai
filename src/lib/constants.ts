@@ -116,10 +116,10 @@ export const PROGRAMS = [
   },
   {
     id: "masters",
-    title: "Master's Programs",
-    shortTitle: "Master's",
+    title: "Bachelor's & Master's Programs",
+    shortTitle: "Bachelor's & Master's",
     description:
-      "Advanced master's programs tailored for working professionals. Coming soon.",
+      "Advanced bachelor's and master's programs tailored for working professionals. Coming soon.",
     duration: "Coming Soon",
     format: "TBA",
     icon: "BookOpen",
@@ -303,7 +303,7 @@ export const COLLABORATION_MODEL = [
 ] as const;
 
 export const IMPACT_STATS = [
-  { value: 4, suffix: "", label: "Partner Universities" },
+  { value: 10, suffix: "+", label: "Partner Universities" },
   { value: 3, suffix: "", label: "Continents" },
   { value: 12, suffix: "+", label: "Countries Served" },
   { value: 6, suffix: "+", label: "Doctoral Programs" },

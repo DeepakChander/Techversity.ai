@@ -1,48 +1,45 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { usePathname } from "next/navigation";
 
-const columns = 5;
+/**
+ * PageTransition — 2026 editorial.
+ * A single ivory curtain descends from the top over 0.55s, then rises
+ * off the bottom on exit. The transition reads like a page turn, not
+ * a glitch — no gradients, no stair columns.
+ *
+ * Note: This is the SPA fallback for browsers without View Transitions API.
+ * On supporting browsers (Chromium 126+, Safari 18.2+), Next.js 15's
+ * native cross-document View Transitions handle the more sophisticated
+ * FLIP morphs. This curtain runs underneath as a visual baseline.
+ */
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
     <AnimatePresence mode="wait">
-      <motion.div key={pathname}>
-        {/* Stair columns overlay */}
+      <motion.div key={pathname} className="relative">
         <motion.div
-          className="fixed inset-0 z-[9997] pointer-events-none flex"
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          {Array.from({ length: columns }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="flex-1 bg-gradient-to-b from-blue-start via-blue-mid to-cyan"
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 0 }}
-              exit={{
-                scaleY: [0, 1, 0],
-                transition: {
-                  duration: 0.8,
-                  times: [0, 0.5, 1],
-                  delay: i * 0.05,
-                  ease: [0.22, 1, 0.36, 1],
-                },
-              }}
-              style={{ originY: "top" }}
-            />
-          ))}
-        </motion.div>
+          className="fixed inset-0 z-[9997] pointer-events-none bg-[var(--color-canvas-ivory)] origin-top"
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 0 }}
+          exit={{
+            scaleY: [0, 1, 1, 0],
+            transformOrigin: ["top", "top", "bottom", "bottom"],
+            transition: {
+              duration: 1.0,
+              times: [0, 0.4, 0.55, 1],
+              ease: [0.76, 0, 0.24, 1],
+            },
+          }}
+        />
 
-        {/* Page content */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
+          transition={{ duration: 0.45, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
           {children}
         </motion.div>
