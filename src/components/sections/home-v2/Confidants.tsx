@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -81,15 +82,25 @@ export function Confidants() {
             >
               {/* Plate */}
               <div className="col-span-2">
-                <div className="confidant-illustration aspect-square bg-[var(--color-canvas-ivory)] border border-[var(--color-canvas-paper-edge)] flex items-center justify-center relative overflow-hidden">
-                  <span
-                    className="type-display text-[var(--color-ink-primary)] opacity-10 select-none"
-                    style={{ fontSize: "clamp(5rem, 10vw, 8rem)", lineHeight: 0.8 }}
-                  >
-                    {u.name.charAt(0)}
-                  </span>
+                <div className="confidant-illustration aspect-square bg-[var(--color-canvas-ivory)] border border-[var(--color-canvas-paper-edge)] flex items-center justify-center relative overflow-hidden p-6">
+                  {u.logo ? (
+                    <Image
+                      src={u.logo}
+                      alt={`${u.name} logo`}
+                      width={300}
+                      height={300}
+                      className="object-contain w-full h-full"
+                    />
+                  ) : (
+                    <span
+                      className="type-display text-[var(--color-ink-primary)] opacity-10 select-none"
+                      style={{ fontSize: "clamp(5rem, 10vw, 8rem)", lineHeight: 0.8 }}
+                    >
+                      {u.name.charAt(0)}
+                    </span>
+                  )}
                   <div
-                    className="absolute left-4 right-4 bottom-4 h-px"
+                    className="absolute left-4 right-4 bottom-4 h-px pointer-events-none"
                     style={{ backgroundColor: `#${u.accent}`, opacity: 0.4 }}
                   />
                   <span className="absolute top-3 left-3 type-mono-meta text-[var(--color-ink-whisper)] text-[10px]">

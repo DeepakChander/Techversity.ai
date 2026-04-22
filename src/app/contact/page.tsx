@@ -9,6 +9,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
 import { ButtonV2 } from "@/components/ui/ButtonV2";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 const schema = z.object({
   name: z.string().min(2, "Your name is required"),
@@ -66,8 +67,20 @@ export default function ContactPage() {
               </motion.p>
             </div>
 
+            {/* ─── Editorial accent image ─── */}
+            <div className="mt-16 lg:mt-20 max-w-[520px] mx-auto">
+              <EditorialImage
+                src="/images/editorial/contact-header.webp"
+                alt="A closed leather correspondence portfolio in deep navy, a fountain pen, and an unopened cream envelope on warm walnut"
+                motion="mask"
+                aspect={1}
+                wrapperClassName="w-full"
+                sizes="(max-width: 768px) 100vw, 520px"
+              />
+            </div>
+
             {/* ─── The email (larger than the form) ─── */}
-            <div className="mt-20 lg:mt-28 py-14 lg:py-20 text-center border-y border-[var(--color-canvas-paper-edge)]">
+            <div className="mt-16 lg:mt-20 py-14 lg:py-20 text-center border-y border-[var(--color-canvas-paper-edge)]">
               <span className="type-mono-label text-[var(--color-heritage-crimson)]">
                 By post
               </span>

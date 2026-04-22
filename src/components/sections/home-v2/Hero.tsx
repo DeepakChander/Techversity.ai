@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { motion } from "motion/react";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
 import { ButtonV2 } from "@/components/ui/ButtonV2";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
@@ -72,7 +73,20 @@ export function Hero() {
       ref={heroRef}
       className="relative min-h-[92vh] lg:min-h-screen bg-[var(--color-canvas-ivory)] flex items-center overflow-hidden"
     >
-      <div className="max-w-[1440px] mx-auto w-full px-8 lg:px-14 pt-32 pb-16 lg:pt-36 lg:pb-20">
+      {/* Subtle paper-texture backdrop */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.22]" aria-hidden="true">
+        <EditorialImage
+          src="/images/editorial/home-hero-backdrop.webp"
+          alt=""
+          motion="kenburns"
+          priority
+          sizes="100vw"
+          wrapperClassName="w-full h-full"
+          className="scale-105"
+        />
+      </div>
+
+      <div className="relative max-w-[1440px] mx-auto w-full px-8 lg:px-14 pt-32 pb-16 lg:pt-36 lg:pb-20">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* ─── Left: editorial typography ─── */}
           <div className="lg:col-span-7 relative z-10">

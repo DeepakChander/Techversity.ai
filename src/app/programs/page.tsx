@@ -11,6 +11,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
 import { ButtonV2 } from "@/components/ui/ButtonV2";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
@@ -128,6 +129,16 @@ export default function ProgramsPage() {
               </div>
             </div>
           </section>
+
+          {/* ─── Establishing shot ─── */}
+          <EditorialImage
+            src="/images/editorial/programs-establishing.webp"
+            alt="An older hand resting on the worn caramel-leather arm of a chair, a single unadorned ring on the third finger"
+            motion="mask"
+            aspect={21 / 9}
+            wrapperClassName="w-full"
+            sizes="100vw"
+          />
 
           {/* ─── Magazine TOC ─── */}
           <section className="relative bg-[var(--color-canvas-ivory)]">

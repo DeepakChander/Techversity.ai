@@ -7,6 +7,7 @@ import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { ButtonV2 } from "@/components/ui/ButtonV2";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
@@ -50,9 +51,20 @@ export function Threshold() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[var(--color-canvas-ivory)] border-t border-[var(--color-canvas-paper-edge)]"
+      className="relative bg-[var(--color-canvas-ivory)] border-t border-[var(--color-canvas-paper-edge)] overflow-hidden"
     >
-      <div className="max-w-[1200px] mx-auto px-8 lg:px-14 py-32 lg:py-48 flex flex-col items-center text-center">
+      {/* Grounding backdrop — warm threshold */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.18]" aria-hidden="true">
+        <EditorialImage
+          src="/images/editorial/home-threshold.webp"
+          alt=""
+          motion="kenburns"
+          wrapperClassName="w-full h-full"
+          sizes="100vw"
+        />
+      </div>
+
+      <div className="relative max-w-[1200px] mx-auto px-8 lg:px-14 py-32 lg:py-48 flex flex-col items-center text-center">
         <IndexNumeral index="08" label="Threshold" total="08" />
 
         <div className="mt-12 overflow-hidden">

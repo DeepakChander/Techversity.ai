@@ -12,6 +12,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
 import { ButtonV2 } from "@/components/ui/ButtonV2";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
@@ -22,6 +23,12 @@ interface ProgramPageV2Props {
   programNumber: string;
   programLabel: string;
   subtitle: string;
+  /** Editorial hero image (webp path under /images/editorial/). */
+  heroImage?: string;
+  heroImageAlt?: string;
+  /** Supporting still-life image beside the Overview / Recognition section. */
+  recognitionImage?: string;
+  recognitionImageAlt?: string;
 }
 
 /**
@@ -33,6 +40,10 @@ export function ProgramPageV2({
   programNumber,
   programLabel,
   subtitle,
+  heroImage,
+  heroImageAlt,
+  recognitionImage,
+  recognitionImageAlt,
 }: ProgramPageV2Props) {
   return (
     <>
@@ -44,8 +55,10 @@ export function ProgramPageV2({
             programNumber={programNumber}
             programLabel={programLabel}
             subtitle={subtitle}
+            heroImage={heroImage}
+            heroImageAlt={heroImageAlt}
           />
-          <Overview data={data} />
+          <Overview data={data} recognitionImage={recognitionImage} recognitionImageAlt={recognitionImageAlt} />
           <Eligibility data={data} />
           <Process data={data} />
           <Structure data={data} />
@@ -65,6 +78,8 @@ function Hero({
   programNumber,
   programLabel,
   subtitle,
+  heroImage,
+  heroImageAlt,
 }: ProgramPageV2Props) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
 
@@ -88,9 +103,9 @@ function Hero({
 
   return (
     <section className="relative bg-[var(--color-canvas-ivory)] border-b border-[var(--color-canvas-paper-edge)]">
-      <div className="max-w-[1440px] mx-auto px-8 lg:px-14 pt-36 lg:pt-44 pb-24 lg:pb-32">
-        <div className="grid lg:grid-cols-12 gap-10 items-end">
-          <div className="lg:col-span-8">
+      <div className="max-w-[1440px] mx-auto px-8 lg:px-14 pt-36 lg:pt-44 pb-20 lg:pb-24">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-end">
+          <div className={heroImage ? "lg:col-span-7" : "lg:col-span-8"}>
             <IndexNumeral
               index={`PROGRAM ${programNumber}`}
               label={programLabel}
@@ -99,24 +114,22 @@ function Hero({
               <h1
                 ref={headlineRef}
                 className="type-display text-[var(--color-ink-primary)] leading-[0.92]"
-                style={{ fontSize: "clamp(3rem, 8vw, 7.5rem)" }}
+                style={{ fontSize: "clamp(2.5rem, 7vw, 6.25rem)" }}
               >
                 {data.title}.
               </h1>
             </div>
             <motion.p
-              className="type-display-italic text-[var(--color-ink-muted)] mt-8 text-[22px] max-w-[32ch]"
+              className="type-display-italic text-[var(--color-ink-muted)] mt-8 text-[20px] max-w-[32ch]"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
               {subtitle}
             </motion.p>
-          </div>
 
-          <div className="lg:col-span-4">
             <motion.dl
-              className="grid grid-cols-2 gap-6 pt-6 border-t border-[var(--color-canvas-paper-edge)]"
+              className="grid grid-cols-2 gap-6 pt-6 mt-10 border-t border-[var(--color-canvas-paper-edge)] max-w-[32rem]"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
@@ -139,6 +152,20 @@ function Hero({
               </div>
             </motion.dl>
           </div>
+
+          {heroImage && (
+            <div className="lg:col-span-5">
+              <EditorialImage
+                src={heroImage}
+                alt={heroImageAlt ?? ""}
+                motion="mask"
+                aspect={3 / 4}
+                priority
+                wrapperClassName="w-full"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -146,13 +173,33 @@ function Hero({
 }
 
 /* ─── Overview — editorial + stats ─── */
-function Overview({ data }: { data: ProgramPageData }) {
+function Overview({
+  data,
+  recognitionImage,
+  recognitionImageAlt,
+}: {
+  data: ProgramPageData;
+  recognitionImage?: string;
+  recognitionImageAlt?: string;
+}) {
   return (
     <section className="relative bg-[var(--color-canvas-bone)] border-b border-[var(--color-canvas-paper-edge)]">
       <div className="max-w-[1440px] mx-auto px-8 lg:px-14 py-24 lg:py-32">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
           <div className="lg:col-span-4">
             <IndexNumeral index="01" label="The recognition" total="07" />
+            {recognitionImage && (
+              <div className="mt-8">
+                <EditorialImage
+                  src={recognitionImage}
+                  alt={recognitionImageAlt ?? ""}
+                  motion="mask"
+                  aspect={4 / 5}
+                  wrapperClassName="w-full"
+                  sizes="(max-width: 1024px) 80vw, 30vw"
+                />
+              </div>
+            )}
             <h2
               className="type-display mt-8 text-[var(--color-ink-primary)]"
               style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.75rem)", lineHeight: 0.95 }}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 /**
  * Pathways — compact vertical editorial list.
@@ -54,6 +55,16 @@ const PATHWAYS: Pathway[] = [
 export function Pathways() {
   return (
     <section className="relative bg-[var(--color-canvas-ivory)] border-t border-[var(--color-canvas-paper-edge)]">
+      {/* Establishing editorial image */}
+      <EditorialImage
+        src="/images/editorial/home-pathways.webp"
+        alt="An older professional at a wooden desk by a window, quiet afternoon light"
+        motion="mask"
+        aspect={21 / 9}
+        wrapperClassName="w-full"
+        sizes="100vw"
+      />
+
       <div className="max-w-[1440px] mx-auto px-8 lg:px-14 py-20 lg:py-28">
         {/* Header band */}
         <div className="flex items-end justify-between flex-wrap gap-6 mb-14 pb-10 border-b border-[var(--color-canvas-paper-edge)]">

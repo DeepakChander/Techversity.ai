@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,6 +11,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
 import { ButtonV2 } from "@/components/ui/ButtonV2";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 import { UNIVERSITIES } from "@/lib/constants";
 
 if (typeof window !== "undefined") {
@@ -88,6 +90,16 @@ export default function UniversitiesPage() {
               </div>
             </div>
           </section>
+
+          {/* ─── Atmospheric band ─── */}
+          <EditorialImage
+            src="/images/editorial/universities-header.webp"
+            alt="An arched leaded-glass window in a 19th-century stone university building at late afternoon"
+            motion="mask"
+            aspect={16 / 9}
+            wrapperClassName="w-full"
+            sizes="100vw"
+          />
 
           {/* ─── Four institutional spreads ─── */}
           <section className="relative bg-[var(--color-canvas-ivory)]">
@@ -221,22 +233,31 @@ function UniversitySpread({
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         {/* ─── Left: plate illustration ─── */}
         <div className="lg:col-span-5">
-          <div className="university-plate relative aspect-[4/5] bg-[var(--color-canvas-bone)] border border-[var(--color-canvas-paper-edge)] overflow-hidden">
-            {/* Architectural serif initial */}
-            <span
-              className="absolute inset-0 flex items-center justify-center type-display text-[var(--color-ink-primary)] select-none"
-              style={{
-                fontSize: "clamp(14rem, 30vw, 24rem)",
-                lineHeight: 0.8,
-                opacity: 0.1,
-              }}
-            >
-              {university.name.charAt(0)}
-            </span>
+          <div className="university-plate relative aspect-[4/5] bg-[var(--color-canvas-bone)] border border-[var(--color-canvas-paper-edge)] overflow-hidden flex items-center justify-center p-16">
+            {university.logo ? (
+              <Image
+                src={university.logo}
+                alt={`${university.name} logo`}
+                width={600}
+                height={600}
+                className="object-contain w-full h-full max-h-[60%]"
+              />
+            ) : (
+              <span
+                className="type-display text-[var(--color-ink-primary)] select-none"
+                style={{
+                  fontSize: "clamp(14rem, 30vw, 24rem)",
+                  lineHeight: 0.8,
+                  opacity: 0.1,
+                }}
+              >
+                {university.name.charAt(0)}
+              </span>
+            )}
 
             {/* Accent hairline */}
             <div
-              className="absolute bottom-12 left-12 right-12 h-px"
+              className="absolute bottom-12 left-12 right-12 h-px pointer-events-none"
               style={{ backgroundColor: accent, opacity: 0.5 }}
             />
 

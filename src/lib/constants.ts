@@ -221,6 +221,7 @@ export const UNIVERSITIES = [
     accreditation: "ACBSP · IACBE · BAC",
     accent: "1E2A47",
     website: "sbs.edu",
+    logo: null,
   },
   {
     id: "eu-global",
@@ -240,6 +241,7 @@ export const UNIVERSITIES = [
     accreditation: "MFHEA Malta · EQF Level 8",
     accent: "1B3A6B",
     website: "euglobal.edu.eu",
+    logo: "/logos/eu-global.webp",
   },
   {
     id: "amu-paris",
@@ -259,6 +261,7 @@ export const UNIVERSITIES = [
     accreditation: "French Ministry · ACBSP · IACBE",
     accent: "102447",
     website: "amu.edu.eu",
+    logo: "/logos/amu-paris.webp",
   },
   {
     id: "esdst",
@@ -278,6 +281,7 @@ export const UNIVERSITIES = [
     accreditation: "eduQua · IACBE · AACSB member",
     accent: "0E3A6B",
     website: "esdst.eu",
+    logo: "/logos/esdst.webp",
   },
   {
     id: "central-global",
@@ -297,6 +301,7 @@ export const UNIVERSITIES = [
     accreditation: "ACBSP Candidate · Georgian Recognition",
     accent: "0B2545",
     website: "centralglobaluniversity.org",
+    logo: "/logos/central-global.webp",
   },
   {
     id: "dunster",
@@ -316,6 +321,7 @@ export const UNIVERSITIES = [
     accreditation: "ACBSP Candidate",
     accent: "7A1F2B",
     website: "dunster.ch",
+    logo: "/logos/dunster.webp",
   },
   {
     id: "texas-global",
@@ -335,6 +341,7 @@ export const UNIVERSITIES = [
     accreditation: "US-registered · Publication-based pathway",
     accent: "5A554E",
     website: "texasglobaluniversity.us",
+    logo: "/logos/texas-global.webp",
   },
   {
     id: "kennedy",
@@ -354,6 +361,7 @@ export const UNIVERSITIES = [
     accreditation: "French Ministry · QAHE · ECLBS",
     accent: "8C2A2A",
     website: "kennedy.edu.eu",
+    logo: "/logos/kennedy.webp",
   },
 ] as const;
 

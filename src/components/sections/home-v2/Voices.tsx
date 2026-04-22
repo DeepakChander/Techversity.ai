@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -91,19 +92,27 @@ export function Voices() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
           {/* ─── Left: pinned masthead ─── */}
           <div className="lg:col-span-4">
-            <div className="lg:sticky lg:top-32">
+            <div className="lg:sticky lg:top-32 flex flex-col gap-8">
               <IndexNumeral
                 index={active.toString().padStart(2, "0")}
                 total={QUESTIONS.length.toString().padStart(2, "0")}
                 label="The voices"
               />
               <h2
-                className="type-display text-[var(--color-ink-primary)] mt-8"
-                style={{ fontSize: "clamp(3rem, 6.5vw, 5.5rem)", lineHeight: 0.95 }}
+                className="type-display text-[var(--color-ink-primary)]"
+                style={{ fontSize: "clamp(2.5rem, 5vw, 4.25rem)", lineHeight: 0.95 }}
               >
                 Questions, read fully.
               </h2>
-              <p className="type-display-italic text-[var(--color-ink-muted)] mt-8 text-[19px] max-w-[32ch]">
+              <EditorialImage
+                src="/images/editorial/home-voices.webp"
+                alt="A hand holding the corner of a thick sheaf of cream printed pages, warm natural light"
+                motion="mask"
+                aspect={4 / 5}
+                wrapperClassName="w-full"
+                sizes="(max-width: 1024px) 80vw, 30vw"
+              />
+              <p className="type-display-italic text-[var(--color-ink-muted)] text-[17px] max-w-[32ch]">
                 We have not collapsed these into an accordion. A serious audience reads.
               </p>
             </div>

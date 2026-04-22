@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -78,9 +79,9 @@ export function Advisory() {
       className="relative bg-[var(--color-canvas-ivory)] border-t border-[var(--color-canvas-paper-edge)]"
     >
       <div className="max-w-[1440px] mx-auto px-8 lg:px-14 py-20 lg:py-24">
-        {/* Header band */}
-        <div className="flex items-end justify-between flex-wrap gap-6 mb-12 pb-8 border-b border-[var(--color-canvas-paper-edge)]">
-          <div>
+        {/* Header band — 2-col: text left, correspondence image right */}
+        <div className="grid lg:grid-cols-12 gap-10 items-end mb-12 pb-8 border-b border-[var(--color-canvas-paper-edge)]">
+          <div className="lg:col-span-7">
             <IndexNumeral index="03" label="The advisory" total="08" />
             <h2
               className="type-display mt-6 text-[var(--color-ink-primary)]"
@@ -88,10 +89,20 @@ export function Advisory() {
             >
               The advisory, in five verbs.
             </h2>
+            <p className="type-display-italic text-[var(--color-ink-muted)] mt-5 text-[16px] max-w-[30ch]">
+              Every conferment follows the same unhurried rhythm. Average · 4–9 months.
+            </p>
           </div>
-          <p className="type-display-italic text-[var(--color-ink-muted)] text-[16px] max-w-[30ch]">
-            Every conferment follows the same unhurried rhythm. Average · 4–9 months.
-          </p>
+          <div className="lg:col-span-5">
+            <EditorialImage
+              src="/images/editorial/home-advisory.webp"
+              alt="A handwritten letter in progress on warm cream paper, fountain pen resting diagonally"
+              motion="parallax"
+              aspect={16 / 9}
+              wrapperClassName="w-full"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+            />
+          </div>
         </div>
 
         {/* Five chapters on one row */}

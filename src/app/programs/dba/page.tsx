@@ -10,6 +10,8 @@ export default function DBAPage() {
       programNumber="002"
       programLabel="Doctor of Business Administration"
       subtitle="Applied research, returning with discipline to practice."
+      heroImage="/images/editorial/dba-hero.webp"
+      heroImageAlt="Overhead view of a working desk — open notebook with handwritten notes, an annotated paper, a warm ceramic cup and reading glasses"
     />
   );
 }
