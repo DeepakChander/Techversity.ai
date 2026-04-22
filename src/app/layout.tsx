@@ -3,7 +3,6 @@ import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LenisProvider } from "@/components/layout/LenisProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
-import { PageTransition } from "@/components/layout/PageTransition";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionRoot } from "@/components/layout/MotionRoot";
 
@@ -95,14 +94,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body
-        className="antialiased overflow-x-hidden"
-        style={{
-          backgroundColor: "var(--color-canvas-ivory)",
-          color: "var(--color-ink-primary)",
-          fontFamily: "var(--font-sans-2026)",
-        }}
-      >
+      <body className="antialiased overflow-x-hidden">
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
@@ -110,7 +102,7 @@ export default function RootLayout({
           <LenisProvider />
           <ScrollToTop />
           <CustomCursor />
-          <PageTransition>{children}</PageTransition>
+          {children}
         </MotionRoot>
       </body>
     </html>

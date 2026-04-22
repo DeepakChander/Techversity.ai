@@ -6,75 +6,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { IndexNumeral } from "@/components/ui/IndexNumeral";
 import { EditorialLink } from "@/components/ui/EditorialLink";
+import { UNIVERSITIES } from "@/lib/constants";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
 /**
- * Confidants — four institutional editorial portraits.
- * NOT a logo wall of equals. Each partner gets the weight of a
- * half-spread magazine feature: large architectural-style illustration,
- * serif name, museum-wall metadata row.
+ * Confidants — four featured institutional editorial portraits.
+ * Reads from `UNIVERSITIES` in constants; filters to `featured: true`.
+ * The full network (all 8 partners) lives on /universities.
  */
 
-interface University {
-  index: string;
-  name: string;
-  location: string;
-  story: string;
-  accreditation: string;
-  recognition: string;
-  programs: string;
-  accent: string;
-}
-
-const UNIVERSITIES: University[] = [
-  {
-    index: "001",
-    name: "CC University",
-    location: "Washington, D.C., United States",
-    story:
-      "A modern university known for rigorous professional doctorates and a measured, senior cohort.",
-    accreditation: "ISO 9001:2015",
-    recognition: "Nationally Accredited",
-    programs: "Hon. Doctorate · DBA · PhD",
-    accent: "1E2A47",
-  },
-  {
-    index: "002",
-    name: "Washington Digital University",
-    location: "Seattle, United States",
-    story:
-      "Pioneer of convergent digital–academic doctoral programmes for accomplished professionals.",
-    accreditation: "Nationally Accredited",
-    recognition: "Online Doctoral Authority",
-    programs: "Hon. Doctorate · DBA",
-    accent: "5A554E",
-  },
-  {
-    index: "003",
-    name: "Euro-Asian University",
-    location: "Tallinn, Estonia",
-    story:
-      "An EU-recognised bridge between Eastern and Western academic traditions, digitally advanced.",
-    accreditation: "EU Recognised",
-    recognition: "National + International",
-    programs: "Hon. Doctorate · PhD",
-    accent: "8C2A2A",
-  },
-  {
-    index: "004",
-    name: "ESDST",
-    location: "European Union",
-    story:
-      "Doctoral conferments across multiple EU member states, rooted in pan-European scholarship.",
-    accreditation: "EU Recognised",
-    recognition: "Multi-State Conferment",
-    programs: "Hon. Doctorate · DBA · PhD",
-    accent: "C8A96A",
-  },
-];
+const FEATURED = UNIVERSITIES.filter((u) => u.featured).slice(0, 4);
 
 export function Confidants() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -120,7 +64,7 @@ export function Confidants() {
               className="type-display mt-6 text-[var(--color-ink-primary)]"
               style={{ fontSize: "clamp(2rem, 4.5vw, 3.75rem)", lineHeight: 0.95 }}
             >
-              Four institutions that do the conferring.
+              The institutions that do the conferring.
             </h2>
           </div>
           <p className="type-display-italic text-[var(--color-ink-muted)] text-[16px] max-w-[30ch]">
@@ -128,14 +72,14 @@ export function Confidants() {
           </p>
         </div>
 
-        {/* 2×2 compact grid on desktop, 1-col on mobile */}
+        {/* 2×2 compact grid */}
         <ul className="grid md:grid-cols-2 gap-0 border-t border-l border-[var(--color-canvas-paper-edge)]">
-          {UNIVERSITIES.map((u) => (
+          {FEATURED.map((u, i) => (
             <li
-              key={u.index}
+              key={u.id}
               className="confidant-card grid grid-cols-5 gap-5 p-7 lg:p-9 border-r border-b border-[var(--color-canvas-paper-edge)]"
             >
-              {/* ─── Left: plate ─── */}
+              {/* Plate */}
               <div className="col-span-2">
                 <div className="confidant-illustration aspect-square bg-[var(--color-canvas-ivory)] border border-[var(--color-canvas-paper-edge)] flex items-center justify-center relative overflow-hidden">
                   <span
@@ -149,16 +93,16 @@ export function Confidants() {
                     style={{ backgroundColor: `#${u.accent}`, opacity: 0.4 }}
                   />
                   <span className="absolute top-3 left-3 type-mono-meta text-[var(--color-ink-whisper)] text-[10px]">
-                    {u.index}
+                    {(i + 1).toString().padStart(3, "0")}
                   </span>
                 </div>
               </div>
 
-              {/* ─── Right: editorial ─── */}
+              {/* Editorial */}
               <div className="col-span-3 flex flex-col justify-between gap-4">
                 <div>
-                  <span className="type-mono-meta text-[var(--color-ink-whisper)]">
-                    CONFIDANT {u.index}
+                  <span className="type-mono-meta text-[var(--color-ink-whisper)] text-[10px]">
+                    CONFIDANT {(i + 1).toString().padStart(3, "0")}
                   </span>
                   <h3
                     className="type-display text-[var(--color-ink-primary)] mt-1"
@@ -171,13 +115,12 @@ export function Confidants() {
                   </p>
                 </div>
 
-                {/* Compact metadata */}
                 <dl className="grid grid-cols-2 gap-3 pt-3 border-t border-[var(--color-canvas-paper-edge)]">
                   <div>
                     <dt className="type-mono-meta text-[var(--color-heritage-crimson)] text-[10px]">
                       Accreditation
                     </dt>
-                    <dd className="type-ui text-[var(--color-ink-primary)] text-[12px] mt-1">
+                    <dd className="type-ui text-[var(--color-ink-primary)] text-[12px] mt-1 leading-[1.35]">
                       {u.accreditation}
                     </dd>
                   </div>
@@ -185,8 +128,8 @@ export function Confidants() {
                     <dt className="type-mono-meta text-[var(--color-heritage-crimson)] text-[10px]">
                       Programmes
                     </dt>
-                    <dd className="type-ui text-[var(--color-ink-primary)] text-[12px] mt-1">
-                      {u.programs}
+                    <dd className="type-ui text-[var(--color-ink-primary)] text-[12px] mt-1 leading-[1.35]">
+                      {u.programs.map((p) => p.replace("Honorary Doctorate", "Hon. Doctorate")).join(" · ")}
                     </dd>
                   </div>
                 </dl>
@@ -197,7 +140,7 @@ export function Confidants() {
 
         <div className="mt-12 pt-8 border-t border-[var(--color-canvas-paper-edge)] flex flex-wrap items-center justify-between gap-6">
           <p className="type-display-italic text-[var(--color-ink-muted)] text-[16px] max-w-[40ch]">
-            The full institutional record lives on the network page.
+            The full network of {UNIVERSITIES.length} institutions lives on the network page.
           </p>
           <EditorialLink href="/universities">
             Read the full network

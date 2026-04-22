@@ -215,10 +215,13 @@ const Seal = (() => {
             const angle = (i / 60) * Math.PI * 2;
             const r1 = 220;
             const r2 = i % 5 === 0 ? 210 : 215;
-            const x1 = 240 + Math.cos(angle) * r1;
-            const y1 = 240 + Math.sin(angle) * r1;
-            const x2 = 240 + Math.cos(angle) * r2;
-            const y2 = 240 + Math.sin(angle) * r2;
+            // Round to 3dp so SSR and client serialize identically (avoids
+            // floating-point hydration mismatches on Math.cos/sin output).
+            const round = (n: number) => Math.round(n * 1000) / 1000;
+            const x1 = round(240 + Math.cos(angle) * r1);
+            const y1 = round(240 + Math.sin(angle) * r1);
+            const x2 = round(240 + Math.cos(angle) * r2);
+            const y2 = round(240 + Math.sin(angle) * r2);
             return (
               <line
                 key={i}

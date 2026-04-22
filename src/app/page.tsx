@@ -1,6 +1,5 @@
 "use client";
 
-import { Preloader } from "@/components/layout/Preloader";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/home-v2/Hero";
@@ -15,7 +14,6 @@ import { Threshold } from "@/components/sections/home-v2/Threshold";
 export default function Home() {
   return (
     <>
-      <Preloader />
       <div className="main-content">
         <Navbar />
         <main id="main-content">

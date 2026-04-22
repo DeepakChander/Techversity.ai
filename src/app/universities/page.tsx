@@ -26,12 +26,9 @@ if (typeof window !== "undefined") {
  *            as narrative).
  */
 
-const ACCENTS: Record<string, string> = {
-  "cc-university": "#1E2A47",
-  "washington-digital": "#5A554E",
-  "euro-asian": "#8C2A2A",
-  esdst: "#C8A96A",
-};
+/* Fallback accent if a university omits its own. Accent is read primarily
+   from the university's `accent` field on UNIVERSITIES, falling back here. */
+const FALLBACK_ACCENT = "#1E2A47";
 
 export default function UniversitiesPage() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -101,7 +98,7 @@ export default function UniversitiesPage() {
                     university={u}
                     position={i + 1}
                     total={UNIVERSITIES.length}
-                    accent={ACCENTS[u.id] ?? "#1E2A47"}
+                    accent={"accent" in u && u.accent ? `#${u.accent}` : FALLBACK_ACCENT}
                   />
                 </li>
               ))}
