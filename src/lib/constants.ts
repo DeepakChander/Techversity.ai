@@ -46,26 +46,26 @@ export const NAV_LINKS = [
   { label: "Universities", href: "/universities" },
   {
     label: "About",
-    href: "/#why-us",
+    href: "/about",
     children: [
       {
         label: "Why Techversity",
-        href: "/#why-us",
-        description: "What sets us apart from the rest",
+        href: "/about",
+        description: "The firm, its posture, and who it serves.",
         icon: "Sparkles",
         accent: "#ff8c42",
       },
       {
         label: "How It Works",
-        href: "/#how-it-works",
-        description: "Your journey in 5 simple steps",
+        href: "/how-it-works",
+        description: "The advisory in five verbs, step by step.",
         icon: "Route",
         accent: "#34d399",
       },
       {
         label: "FAQs",
-        href: "/#faq",
-        description: "Answers to common questions",
+        href: "/faqs",
+        description: "The questions we are asked — answered in full.",
         icon: "HelpCircle",
         accent: "#94A3B8",
       },
@@ -492,14 +492,13 @@ export const FOOTER_LINKS = {
     { label: "Global Network", href: "/universities#network" },
   ],
   company: [
-    { label: "About Us", href: "/#why-us" },
-    { label: "How It Works", href: "/#how-it-works" },
+    { label: "About the firm", href: "/about" },
+    { label: "How it works", href: "/how-it-works" },
     { label: "Contact", href: "/contact" },
-    { label: "Apply Now", href: "/apply" },
+    { label: "Begin a conversation", href: "/apply" },
   ],
   resources: [
-    { label: "FAQs", href: "/#faq" },
-    { label: "Blog", href: "#" },
+    { label: "FAQs", href: "/faqs" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
